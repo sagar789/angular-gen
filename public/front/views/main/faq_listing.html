@@ -1,0 +1,44 @@
+<div class="Inner-Page-Banner">
+    <h1><span>Help</span> Center</h1>
+    <!-- <div class="Quick-search">
+        <input type="text" class="Inputtype1" placeholder="Keyword Search..." />
+    </div> -->
+</div>
+<!--Div class Home_block1 Block start here -->
+<div class="Page_content_block" ng-controller="pageCtrl" ng-init="loadFaqDetails()">
+    <div class="container">
+        <div class="row">
+            <div id="faqs">
+                <div class="panel" ng-repeat="data in dataPage">
+                    <div class="panel-heading ques ">
+                        <h4 class="panel-title"><a >{{data.question}}</a></h4>
+                    </div>
+                    <div class="ans panel-collapse collapse">
+                        <div class="panel-body">
+                            {{data.answer}}
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="Faq-block1">
+                    <div class="text-center faqlist" ng-hide="(dataPage.length > 0)">No Data Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#faqs .ques').each(function() {
+                var tis = $(this),
+                    state = false,
+                    answer = tis.next('div').slideUp();
+                tis.click(function() {
+                    state = !state;
+                    answer.slideToggle(state);
+                    tis.toggleClass('active', state);
+                });
+            });
+        }, 100);
+    });
+    </script>

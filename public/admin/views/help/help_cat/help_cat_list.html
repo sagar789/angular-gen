@@ -1,0 +1,86 @@
+<div class="row" ng-controller="helpCtrl" ng-init="loadParentCategory()">
+    <div class="col-md-12">
+        <div class="col-md-8 margin-botton">
+        <h5 class="subtitle mb5">{{categoryTitle}}</h5>
+        </div>
+        <div class="col-md-4 margin-botton">
+            <a ui-sref="addHelpCategory" class="btn btn-lightblue pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Category</a>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-8">
+            
+            <div class="items_leave2nd">
+                <div class="col-md-2  text-left" ng-show="(categoryList.length > 0)">
+                    <label for="search">items per page:</label>
+                    <select ng-model="pageSize" class="form-control mb15" ng-options="option for option in paginationOption" style="width:90px;">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 header_search_box_right pull-right">
+            <p class="mb20">
+                <div class="dataTables_search" id="table1_filter">
+                    <label>Search:
+                        <input type="text" aria-controls="table1" ng-model="dataSearch" placeholder="Search">
+                    </label>
+                </div>
+            </p>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered mb30">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="data in categoryList | filter:{ title: dataSearch } | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{$index+1}}</td>
+                    <td>{{data.title}}</td>
+                    <!-- <td>
+                        <button class="btn {{(data.status == 1)?'btn-primary':'btn-danger'}} btn-xs">{{(data.status == 1)?'Active':'Inactive'}}</button>
+                    </td> -->
+                    <td>{{data.created | date : 'short'}}</td>
+                    <td class="table-action">
+                        <a ui-sref="editHelpCategory({Id:data.id})" title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a href="javascript:void(0)" ng-click="deleteParentCategory(data.id)" class="delete-row" title="Delete"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-12 text-center not-found" ng-show="(categoryList |filter:dataSearch).length == 0">
+            <span>There is no data available</span>
+        </div>
+        <div class="text-center">
+            <!-- <div class="col-md-1  text-left" ng-show="(userList.length > 0)">
+                <label for="search">items per page:</label>
+                <input type="number" min="1" max="20" class="form-control" ng-model="pageSize">
+            </div> -->
+            <div class="pull-right">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-12">
+        <div class="col-md-8">
+            <h5 class="subtitle mb5">{{categoryTitle}}</h5>
+            <p class="mb20">
+                <div class="dataTables_search" id="table1_filter">
+                    <label>Search:
+                        <input type="text" aria-controls="table1" ng-model="dataSearch" placeholder="Category Title">
+                    </label>
+                </div>
+            </p>
+        </div>
+        <div class="col-md-4 margin-botton">
+            <a ui-sref="addHelpCategory" class="btn btn-lightblue pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Category</a>
+        </div>
+    </div> -->
+    <!-- col-md-6 -->
+</div>
+<!-- row -->

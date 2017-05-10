@@ -1,0 +1,88 @@
+<div class="row" ng-controller="userCtrl" ng-init="editUser()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">View User Detail</h5>
+        <p class="mb20"></p>        
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Image:</label>
+                        <div class="col-sm-8">
+                            <img class="propImg" src="/front/images/userpic/thumb/{{propEdImg}}" width="200" height="150">
+                       
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email:</label>
+                        <div class="col-sm-8">
+                        {{userData.email}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Mobile:</label>
+                        <div class="col-sm-8">
+                            {{userData.mobile}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">First Name:</label>
+                        <div class="col-sm-8">
+                            {{userData.fname}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Last Name:</label>
+                        <div class="col-sm-8">
+                            {{userData.lname}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Address::</label>
+                        <div class="col-sm-8">
+                            {{userData.address}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Promo Code:</label>
+                        <div class="col-sm-8">
+                        {{userData.promo_code}}
+                        </div>
+                        
+                    </div>  
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">IsSuspended:</label>
+                        <div class="col-sm-8">
+                            {{userData.issuspend.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status:</label>
+                        <div class="col-sm-8">
+                            {{userData.status.name}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Created:</label>
+                        <div class="col-sm-8">
+                            {{userData.created | date : 'short'}}
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <a ui-sref="trailerManage" class="btn btn-primary">Back to List</a>
+                        </div>                        
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

@@ -1,0 +1,56 @@
+<div class="row" ng-controller="cmsCtrl">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Add CMS</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="addForm" method="post" ng-submit="add()" novalidate enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Title:</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="title" class="form-control" ng-model="form.title" required />
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.name.$dirty) && addForm.title.$error.required">Please enter title.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Description:</label>
+                        <div class="col-sm-5">
+                            <textarea ckeditor="editorOptionsOne" ng-model="form.description"></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="status" ng-model="form.status" ng-options="option.name for option in statusOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.status.$dirty) && addForm.status.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4">
+                            <a ui-sref="cmsManage" class="btn btn-warning">cancel</a>
+                            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        </div>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

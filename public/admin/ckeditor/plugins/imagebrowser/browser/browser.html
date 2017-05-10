@@ -1,0 +1,113 @@
+<!doctype html>
+<html ng-app="sagarUpload">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <base>
+    <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
+    <link href="style.default.css" rel="stylesheet">
+    <link href="prettyPhoto.css" rel="stylesheet">
+    <link rel="stylesheet" href="browser.css">
+</head>
+<style type="text/css">
+html,
+body {
+    overflow: auto;
+}
+
+.imgdiv {
+    float: right;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.uploadbtn {
+    border: 2px solid #428BCA;
+    color: #428BCA;
+    text-transform: uppercase;
+    font-family: 'LatoBold';
+    font-size: 12px;
+    border-radius: 3px;
+    line-height: 21px;
+    -moz-transition: all 0.2s ease-out 0s;
+    -webkit-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+    padding: 6px 15px;
+    px;
+    cursor: pointer;
+}
+</style>
+
+<body>
+    <div class="imgdiv" ng-controller="sagarCtrl">
+        <form id="form1" name="addForm" method="post" enctype="multipart/form-data">
+            <input class="uploadbtn" accept="/image/jpeg" type="file" name="imag" onChange="angular.element(this).scope().uploadImage(this)" />
+        </form>
+    </div>
+    <script type="text/x-template-html" id="js-template-image">
+        <div class="col-xs-6 col-sm-4 col-md-2 image">
+            <div class="thmb">
+                <div class="ckbox ckbox-default" style="cursor: pointer;">
+                    <img src="close.png" width="20" height="20" id="getImage">
+                </div>
+                <div class="thmb-prev">
+                    <a href="javascript://" class="thumbnail js-image-link" data-url="%imageUrl%"><img src="%thumbUrl%" class="img-responsive" id="curImg" width="266" hidden="177">
+                    </a>
+                </div>
+                <!-- <h5 class="fm-title"><a href="#">Vegetarian.png</a></h5> -->
+            </div>
+        </div>
+    </script>
+    <ul class="folder-switcher" id="js-folder-switcher"></ul>
+    <div class="mainpanel">
+        <div class="contentpanel">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row filemanager" id="js-images-container">
+                        Loading..
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="ng-file-upload.js"></script>
+    <script type="text/javascript" src="ng-file-upload-shim.js"></script>
+    <script type="text/javascript" src="browser.js"></script>
+    <script type="text/javascript">
+    CkEditorImageBrowser.init();
+    </script>
+</body>
+
+</html>
+<script type="text/javascript">
+var app = angular.module("sagarUpload", ["ngFileUpload"]);
+app.controller("sagarCtrl", ["$scope", "$http", "Upload", "$window", function($scope, $http, Upload, $window) {
+    $scope.uploadImage = function() {
+        $http.post('/api/upload', {
+            id: 'text'
+        }).then(function(res) {
+            console.log('klklkl')
+        }, function(err) {
+            console.log('error', err)
+        });
+    }
+    $scope.uploadImage = function(e) {
+        $scope._upload(angular.element(e)[0].files[0]).success(function(res) {
+            $window.location.reload();
+        }, function(err) {
+            console.log(err);
+        });
+    }
+    $scope._upload = function(Vfiles) {
+        if (Vfiles) {
+            return Upload.upload({
+                url: '/api/upload_file_manage',
+                file: Vfiles
+            });
+        }
+    };
+
+}]);
+</script>

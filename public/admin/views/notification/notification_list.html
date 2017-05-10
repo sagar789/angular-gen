@@ -1,0 +1,71 @@
+<div class="row" ng-controller="notifCtrl" ng-init="loadAll()">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <h5 class="subtitle mb5">{{userTitle}}</h5>
+            <div class="items_leave2nd">
+                <div class="col-md-2  text-left" ng-show="(list.length > 0)">
+                    <label for="search">items per page:</label>
+                    <select ng-model="pageSize" class="form-control mb15" ng-options="option  for option in paginationOption" style="width:90px;">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 header_search_box_right pull-right">
+            <p class="mb20">
+                <div class="dataTables_search" id="table1_filter">
+                    <label>Search:
+                        <input type="text" aria-controls="table1" ng-model="dataSearch" placeholder="Search">
+                    </label>
+                </div>
+            </p>
+        </div>
+    </div>
+    <!-- <div class="col-md-4 margin-botton">
+            <a ui-sref="addCms" class="btn btn-lightblue pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add CMS</a>
+        </div> -->
+    <div class="table-responsive">
+        <table class="table table-bordered mb30">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Reciver</th>
+                    <th>Sender</th>
+                    <th>Notification type</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="data in list | filter:dataSearch | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{data.row_number}}</td>
+                    <td>{{data.receiver}}</td>
+                    <td>{{data.sender}}</td>
+                    <td>{{data.notification_type}}</td>
+                    <td>{{data.text}}</td>
+                    <td>
+                        <button class="btn {{(data.status == 1)?'btn-primary':'btn-danger'}} btn-xs">{{(data.status == 1)?'Sent':'Unsent'}}</button>
+                    </td>
+                    <td>{{data.created | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                    <td class="table-action">
+                        <!-- <a ui-sref="editCms({Id:data.id})"><i class="fa fa-pencil"></i></a> -->
+                        <a href="javascript:void(0)" ng-click="delete(data.notification_id)" class="delete-row"><i class="fa fa-trash-o"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-12 text-center not-found" ng-show="(list |filter:dataSearch).length == 0">
+            <span>There is no data available</span>
+        </div>
+        <div class="text-center">
+            <div class="pull-right">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+    <!-- table-responsive -->
+</div>
+<!-- col-md-6 -->
+</div>
+<!-- row -->

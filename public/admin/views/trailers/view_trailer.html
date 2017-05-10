@@ -1,0 +1,101 @@
+<div class="row" ng-controller="trailerCtrl" ng-init="edit()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">View Trailer Detail</h5>
+        <p class="mb20"></p>        
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Type:</label>
+                        <div class="col-sm-8">
+                            {{form.trailer_type}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Type Image:</label>
+                        <div class="col-sm-8">
+                            <img class="propImg" src="/admin/images/trailers/thumb/{{form.trailer_type_image}}" width="200" height="150">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Size:</label>
+                        <div class="col-sm-8">
+                            {{form.size}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Owner:</label>
+                        <div class="col-sm-8">
+                            {{form.owner}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Owner Image:</label>
+                        <div class="col-sm-8">
+                            <img class="propImg" src="/front/images/userpic/thumb/{{form.owner_image}}" width="200" height="150">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">State:</label>
+                        <div class="col-sm-8">
+                            {{form.state}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Location:</label>
+                        <div class="col-sm-8">
+                            {{form.trailer_location}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Registration Expiry:</label>
+                        <div class="col-sm-8">
+                            {{form.trailer_registration_expiry | date:"longDate"}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Registration Number:</label>
+                        <div class="col-sm-8">
+                            {{form.trailer_registration_number}}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Available:</label>
+                        <div class="col-sm-8">
+                            {{form.status}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Created:</label>
+                        <div class="col-sm-8">
+                            {{form.created | date:"MM/dd/yyyy 'at' h:mma"}}
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Description:</label>
+                        <div class="col-sm-8">
+                        {{form.trailer_desc}}
+                        </div>
+                        
+                    </div>                    
+
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <a ui-sref="trailerManage" class="btn btn-primary">Back to List</a>
+                        </div>                        
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

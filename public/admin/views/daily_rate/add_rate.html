@@ -1,0 +1,72 @@
+<div class="row" ng-controller="rateCtrl">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Add Daily Rate</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="addForm" method="post" ng-submit="add()" novalidate enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Trailer Type:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="type" ng-model="form.type" ng-options="option.name for option in typeOption track by option.id" ng-change="getTypeData(form.type)" required>
+                                <option value="">Select Type (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.type.$dirty) && addForm.type.$error.required">Please select type.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Select Size</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="size" ng-model="form.size" ng-options="option.label for option in sizeOption track by option.id" required>
+                                <option value="">Select Type (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.size.$dirty) && addForm.size.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Select Duration</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="duration" ng-model="form.duration" ng-options="option.name for option in durationOption track by option.id" ng-change="checkExists()" required>
+                                <option value="">Select Your Duration (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.duration.$dirty) && addForm.duration.$error.required">Please select Duration.</label>
+                                <label class="error" ng-show="alrdyTkn">Rate for the selected trailer type/size/duration already exists.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Price:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="price" class="form-control" ng-model="form.price" required ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" />
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.price.$dirty) && addForm.price.$error.required">Please enter price.</label>
+                                <label class="error" ng-show="(addForm.$submitted || addForm.price.$dirty) && addForm.price.$error.pattern">Please enter valid price.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-4">
+                                <a ui-sref="dailyRateManage" class="btn btn-warning">cancel</a>
+                                <button type="submit" class="btn btn-primary pull-right" ng-disabled="alrdyTkn">Submit</button>
+                            </div>
+                            <div class="col-sm-4">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- panel-footer -->
+                </div>
+                <!-- panel-default -->
+        </form>
+        </div>
+    </div>
+    <!-- row -->

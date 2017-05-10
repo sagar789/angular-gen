@@ -1,0 +1,36 @@
+<div class="Inner-Page-Banner">
+    <h1>My <span>Account</span></h1>
+</div>
+<!--Div class Home_block1 Block start here -->
+<div class="MyAccount_block" ng-controller="userCtrl" ng-init="index()">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-5 col-md-3 ">
+                <div class="Account-left">
+                    <div class="User_Profile_Box">
+                        <img ng-src="{{userImgP}}" height="191" width="204" ng-if="(userImgP)">
+                        <img src="/front/images/userpic/thumb/{{userData.profile_pic}}" alt="user" ng-if="(!userImgP && userData.profile_pic.length > 0)" />
+                        <img src="/front/images/no_image.png" alt="user" ng-if="(!userImgP && userData.profile_pic.length == 0)" />
+                    </div>
+                    <div class="Change_pic">
+                        <input type="file" name="change image" class="upload-pic" onChange="angular.element(this).scope().uploadUserImage(this)" />
+                        <div class="upload-pic-text">
+                           Change Photo</div>
+                    </div>
+                    <div class="progress Progress_bar">
+                        <div class="progress-bar progress-bar-success" role="progressbar" ng-style="{'width': width}">
+                            <span class="sr-only">{{width}} Complete (success)</span>
+                        </div>
+                    </div>
+                    <div class="Progress_bar2">
+                        <br /> Profile Completed {{width}}
+                    </div>
+                    <div ng-include src="'front/views/user/profileMidle.html'"></div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-sm-7 col-md-9 Account-right">
+                <div id="element"></div>
+            </div>
+        </div>
+    </div>
+</div>

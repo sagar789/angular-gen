@@ -1,0 +1,25 @@
+<div ng-controller="pageCtrl" ng-init="loadPages(6)">
+    <!-- <div ng-bind-html="description"></div> -->
+    <div class="Inner-Page-Banner">
+        <h1>Our <span>Story</span></h1>
+    </div>
+    <!--Div class Home_block1 Block start here -->
+    <div class="Page_content_block">
+        <div class="container">
+            <div ng-bind-html="description"></div>
+        </div>
+    </div>
+</div>
+<script src="../../../libs/owl.carousel.js"></script>
+<!-- <script type="text/javascript">
+$(document).ready(function() {
+    setTimeout(function() {
+        $("#owl-demo").owlCarousel({
+            autoPlay: 3000, //Set AutoPlay to 3 seconds
+            items: 3,
+            itemsDesktop: [1199, 3],
+            itemsDesktopSmall: [979, 3]
+        });
+    }, 100)
+});
+</script> -->

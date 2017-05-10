@@ -1,0 +1,85 @@
+<div class="row" ng-controller="trailerCtrl" ng-init="edit()">
+    <div class="col-md-10">
+        <h5 class="subtitle mb5">Edit Trailer</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="updateForm" method="post" ng-submit="update()" novalidate enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Title:</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="title" class="form-control" ng-model="form.title" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.name.$dirty) && updateForm.title.$error.required">Please enter title.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Description:</label>
+                        <div class="col-sm-9">
+                             <textarea ng-model="form.description" name="textarea" ng-te-editor id="textarea"></textarea>                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="status" ng-model="form.status" ng-options="option.name for option in statusOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.status.$dirty) && updateForm.status.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Image:</label>
+                        <div class="col-sm-8">
+                            <input accept="/image/jpeg" type="file" name="propImg" required valid-file onChange="angular.element(this).scope().previewImage(this)" ng-model="trailerData.propImg" />-->
+                            <!-- <img class="propImg" ng-src="/admin/images/uploadfile.png" ng-if="!propImg" width="100" height="80"> -->
+                            <!-- <img class="propImg" ng-if="propImg" ng-src="{{propImg}}" ng-if="propImg.indexOf('.jpeg') === -1 && propImg.indexOf('.jpg') === -1 && propImg.indexOf('.png') === -1" width="200" height="150">
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted) && addForm.propImg.$error.required">Please select image.</label>
+                            </div>
+                        </div>
+                    </div> --> 
+                   
+                    
+                   
+                    
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Start Date:</label>
+                        <div class="col-sm-5">
+                            <datepicker date-format="yyyy-MM-dd">
+                                <input class="form-control" name="stDate" readonly="true" type="text" ng-model="trailerData.stDate" required />
+                                <div class="error">
+                                    <label class="error" ng-show="(addForm.$submitted || addForm.stDate.$dirty) && addForm.stDate.$error.required">Please select start date</label>
+                                </div>
+                            </datepicker>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">End Date:</label>
+                        <div class="col-sm-5">
+                            <datepicker date-format="yyyy-MM-dd">
+                                <input class="form-control" name="enDate" readonly="true" type="text" ng-model="trailerData.enDate" required />
+                                <div class="error">
+                                    <label class="error" ng-show="(addForm.$submitted || addForm.enDate.$dirty) && addForm.enDate.$error.required">Please select end date</label>
+                                </div>
+                            </datepicker>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a ui-sref="cmsManage" class="btn btn-warning pull-right">cancel</a>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

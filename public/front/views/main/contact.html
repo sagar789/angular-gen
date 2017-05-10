@@ -1,0 +1,51 @@
+<div class="Inner-Page-Banner">
+    <h1><span>Contact</span> Us</h1>
+</div>
+<!--Div class Home_block1 Block start here -->
+<div class="Contact_content_block" ng-controller="userCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="Contact-section">
+                <div class="Contact-block">
+                    <div class="Contact-form">
+                        <form name="contactForm" ng-submit="sendContact()" novalidate="true">
+                            <label id="username">Name</label>
+                            <input type="text" class="Inputtype1" name="name" placeholder="Name" ng-model="contact.name" required />
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.name.$dirty) && contactForm.name.$error.required">Please enter name.</span>
+                            <label id="username">Email</label>
+                            <input type="email" class="Inputtype1" name="email" placeholder="Email" ng-model="contact.email" required />
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.email.$dirty) && contactForm.email.$error.required">Please enter email.</span>
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.email.$dirty) && contactForm.email.$error.email">Please enter valid email.</span>
+                            <label id="username">Subject</label>
+                            <input type="text" class="Inputtype1" name="subject" placeholder="Subject" ng-model="contact.subject" required />
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.subject.$dirty) && contactForm.subject.$error.required">Please enter subject.</span>
+                            <label id="username">Phone</label>
+                            <input type="text" class="Inputtype1" name="phone" placeholder="Phone Number" ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" ng-model="contact.phone" maxlength="14" required/>
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.phone.$dirty) && contactForm.phone.$error.required">Please enter phone.</span>
+                            <span class="error pull-right" ng-show="(contactForm.$submitted || contactForm.phone.$dirty) && contactForm.phone.$error.pattern">Please enter valid phone no.</span>
+                            <label id="username">I’m a</label>
+                            <select ng-model="contact.user" class="Inputtype1" ng-options="option for option in userTypeOption">
+                            </select>
+                            <!-- <select class="Inputtype1" ng-model="contact.user">
+                                <option value="1">Renter</option>
+                                <option value="2">Owner</option>
+                            </select> -->
+                            <label id="username">Message</label>
+                            <textarea class="Textarea1" name="message" placeholder="Your message here" ng-model="contact.message"></textarea>
+                            <div class="file-attach">
+                                <div class="file-tag">
+                                    <input type="file" name="file attach" onChange="angular.element(this).scope().getAttacmentFile(this)" />
+                                    <span class="error" ng-show="fileShowError">{{fileShowErrorText}}</span>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn Button2" value="Submit" ng-disabled="fileShowError" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+window.scrollTo(500, 0);
+</script>

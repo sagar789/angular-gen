@@ -1,0 +1,86 @@
+<div class="row" ng-controller="bookTrailerCtrl" ng-init="loadAll()">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <h5 class="subtitle mb5">{{userTitle}}</h5>
+            <div class="items_leave2nd">
+                <div class="col-md-2  text-left" ng-show="(List.length > 0)">
+                    <label for="search">items per page:</label>
+                    <!-- <input type="number" min="1" max="20" class="form-control" ng-model="pageSize"> -->
+                    <select ng-model="pageSize" class="form-control mb15" ng-options="option  for option in paginationOption" style="width:90px;">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 header_search_box_right pull-right">
+            <p class="mb20">
+                <div class="dataTables_search" id="table1_filter">
+                    <label>Search:
+                        <input type="text" aria-controls="table1" ng-model="dataSearch" placeholder="Search">
+                    </label>
+                </div>
+            </p>
+        </div>
+    </div>
+    <!-- <div class="col-md-4 margin-botton">
+            <a ui-sref="addUser" class="btn btn-lightblue pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add User</a>
+        </div> -->
+    <div class="table-responsive">
+        <table class="table table-bordered mb30">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Trailer Image</th>
+                    <th>Renter</th>
+                    <th>Trailer Type</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th ng-if="cancelby">CancelBy</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="data in List | filter:dataSearch | itemsPerPage: pageSize" current-page="currentPage">
+                    <td>{{$index+1}}</td>
+                    <td><img src="images/trailers/thumb/{{(data.image.length == 0)?'no_image1.gif':data.image}}" height="100" width="100"></td>
+                    <td>{{data.renter}}</td>
+                    <td>{{data.trailer_type}}</td>
+                    <td>{{data.owner}}</td>
+                    <td>
+                        <button class="btn {{(data.status == 0)?'btn-warning':(data.status == 1)?'btn-primary':(data.status == 2)?'btn-danger':(data.status == 3)?'btn-maroon':(data.status == 4)?'btn-lightblue':(data.status == 5)?'btn-orange':''}} btn-xs">{{(data.status == 0)?'Pending':(data.status == 1)?'Accepted':(data.status == 2)?'Canceled':(data.status == 3)?'Decline':(data.status == 4)?'PickedUp':(data.status == 5)?'DropOff':''}}</button>
+                    </td>
+                    <td ng-if="(data.status == 2)">{{data.cancel_by | uppercase}}</td>
+                    <!-- <td>
+                            <button class="btn {{(data.isdecline == 0)?'btn-primary':'btn-danger'}} btn-xs">{{(data.isdecline == 0)?'No':'Yes'}}</button>
+                        </td>
+                        <td>
+                            <button class="btn {{(data.iscancel == 0)?'btn-primary':'btn-danger'}} btn-xs">{{(data.iscancel == 0)?'No':'Yes'}}</button>
+                        </td>
+                        <td>
+                            <button class="btn {{(data.ispickup == 0)?'btn-danger':'btn-primary'}} btn-xs">{{(data.ispickup == 0)?'Not PickedUp':'PickedUp'}}</button>
+                        </td>
+                        <td>
+                            <button class="btn {{(data.isdropoff == 0)?'btn-danger':'btn-primary'}} btn-xs">{{(data.isdropoff == 0)?'No':'Yes'}}</button>
+                        </td> -->
+                    <td>{{data.created | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                    <!-- <td class="table-action">
+                            <a ui-sref="viewUser({Id:data.id})" title="View Detail"><i class="fa fa-eye"></i></a>
+                            <a ui-sref="editUser({Id:data.id})"><i class="fa fa-pencil"></i></a>
+                            <a href="javascript:void(0)" ng-click="deleteUser(data.id)" class="delete-row"><i class="fa fa-trash-o"></i></a>
+                        </td> -->
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-12 text-center not-found" ng-show="(List |filter:dataSearch).length == 0">
+            <span>There is no data available</span>
+        </div>
+        <div class="text-center">
+            <div class="pull-right">
+                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+    <!-- table-responsive -->
+</div>
+<!-- col-md-6 -->
+</div>
+<!-- row -->

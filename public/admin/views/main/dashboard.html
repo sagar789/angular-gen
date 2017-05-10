@@ -1,0 +1,120 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row" ng-controller="dashCtrl" ng-init="index()">
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-success panel-stat">
+                    <div class="panel-heading">
+                        <div class="stat">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <img src="images/is-user.png" alt="" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <small class="stat-label">Total Registered Users</small>
+                                    <h1>{{countUser}}</h1>
+                                </div>
+                            </div>
+                            <!-- row -->
+                            <div class="mb15"></div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <small class="stat-label">Last Week Registered Users</small>
+                                    <h4>{{lastWeekCount}}</h4>
+                                </div>
+                            </div>
+                            <!-- row -->
+                        </div>
+                        <!-- stat -->
+                    </div>
+                    <!-- panel-heading -->
+                </div>
+                <!-- panel -->
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-danger panel-stat">
+                    <div class="panel-heading">
+                        <div class="stat">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <img src="images/is-document.png" alt="" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <small class="stat-label">Total Booking Trailer List</small>
+                                    <h1>{{total_booking_list}}</h1>
+                                </div>
+                            </div>
+                            <!-- row -->
+                            <div class="mb15"></div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <small class="stat-label">Drop-off</small>
+                                    <h4>{{booked_trailer_dropoff}}</h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <small class="stat-label">Pending</small>
+                                    <h4>{{booked_trailer_pending}}</h4>
+                                </div>
+                                <div class="col-xs-3">
+                                    <small class="stat-label">Cancelled</small>
+                                    <h4>{{booked_trailer_cancelled}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- stat -->
+                    </div>
+                    <!-- panel-heading -->
+                </div>
+                <!-- panel -->
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="panel panel-dark panel-stat">
+                    <div class="panel-heading">
+                        <div class="stat">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <img src="images/is-money.png" alt="" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <small class="stat-label">Total Amount</small>
+                                    <h1>{{total_amount | currency}}</h1>
+                                </div>
+                            </div>
+                            <!-- row -->
+                            <div class="mb15"></div>
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    <small class="stat-label">Total Refund</small>
+                                    <h4>{{refunded_amount | currency}}</h4>
+                                </div>
+                                <div class="col-xs-5">
+                                    <small class="stat-label">Total Transfer</small>
+                                    <h4>{{transfer_amount | currency}}</h4>
+                                </div>
+                                <!-- <div class="col-xs-6">
+                            <small class="stat-label">Last Month</small>
+                            <h4>$503,000</h4>
+                        </div> -->
+                            </div>
+                            <!-- row -->
+                        </div>
+                        <!-- stat -->
+                    </div>
+                    <!-- panel-heading -->
+                </div>
+                <!-- panel -->
+            </div>
+            <!--  <div class="row">
+                <div class="col-md-6 mb30">
+                    <h5 class="subtitle mb5">Pie Chart</h5>
+                    <p class="mb15">Labels can be hidden if the slice is less than a given percentage of the pie.</p>
+                    <div id="piechart" style="width: 100%; height: 300px"></div>
+                </div>
+                <div class="col-md-6 mb30">
+                    <h5 class="subtitle mb5">Bar Chart</h5>
+                    <p class="mb15">With the categories plugin you can plot categories/textual data easily.</p>
+                    <div id="barchart" style="width: 100%; height: 300px"></div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

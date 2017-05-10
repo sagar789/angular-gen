@@ -1,0 +1,47 @@
+<div class="row" ng-controller="faqCtrl" ng-init="editCategory()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Edit Blog Category</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="updateForm" ng-submit="updateCategory()" novalidate="true">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Title:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="category_name" class="form-control" ng-model="categoryData.category_name" ng-blur="duplicateCategory(categoryData.category_name)" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.category_name.$dirty) && updateForm.category_name.$error.required">Please enter title.</label>
+                                <label class="error" ng-show="alReg">Already Taken</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="status" ng-model="categoryData.status" ng-options="option.name for option in statusOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.status.$dirty) && updateForm.status.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

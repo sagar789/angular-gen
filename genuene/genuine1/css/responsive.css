@@ -1,0 +1,31 @@
+@media only screen and (max-width:1200px) {
+    .home-slider .carousel-caption h1{ font-size:52px;}
+}
+@media only screen and (max-width:992px) {
+    .home-slider .carousel-caption h2{ font-size:20px;}
+    .home-slider .carousel-caption h1{ font-size:32px;}
+    .category a{ min-height:150px;}
+    .footer-menu ul li{ margin:0 5px;}
+    .header-right form input[type=text]:focus{ width:200px;}
+}
+@media only screen and (max-width:767px) {
+    header{ padding:5px 10px; height:46px;}
+    header .logo img{ width:126px;}
+    header .header-right{ margin: 5px 100px 0 0}
+    .hamburger{ top:6px; right:48px;}
+    #page-content-wrapper{ padding-top:46px;}
+    #sidebar-wrapper{ margin-top:45px;}
+}
+@media only screen and (max-width:480px) {
+    .home-slider .carousel-caption{ top:0;}
+    .home-slider .carousel-caption h2{ font-size:18px;}
+    .home-slider .carousel-caption h1{ font-size:18px; margin:0 0 5px;}
+    .home-slider .carousel-caption a{ font-size:18px; width:165px;}
+    footer .social-media-icons{ float:none; text-align: center; padding-bottom:10px;}
+    footer .play-store{ float:none; text-align: center;}
+    .menu-text{ display:none;}
+    .hamburger{ right:0;}
+    header .header-right{ margin:5px 33px 0 0;}
+    .header-right form input[type=text]:focus{width:150px;}
+
+}

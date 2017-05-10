@@ -1,0 +1,73 @@
+<div class="row" ng-controller="userCtrl" ng-init="viewContact()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">View Contact Detail</h5>
+        <p class="mb20"></p>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Email:</label>
+                    <div class="col-sm-8">
+                        {{form.email}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Phone:</label>
+                    <div class="col-sm-8">
+                        {{form.phone}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Name:</label>
+                    <div class="col-sm-8">
+                        {{form.name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Subject:</label>
+                    <div class="col-sm-8">
+                        {{form.subject}}
+                    </div>
+                </div>
+                <div class="form-group" ng-if="(form.message != '')">
+                    <label class="col-sm-4 control-label">Message</label>
+                    <div class="col-sm-8 word-legth">
+                        {{form.message}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">User type:</label>
+                    <div class="col-sm-8">
+                        {{form.user_type}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Created:</label>
+                    <div class="col-sm-8">
+                        {{form.created | date : 'short'}}
+                    </div>
+                </div>
+                <div class="form-group" ng-if="(form.attachment != '')">
+                    <label class="col-sm-4 control-label">Attachment:</label>
+                    <div class="col-sm-8">
+                        <a title="download attachment" href="/front/attachment/{{form.attachment}}" target="_self"><img src="/admin/images/cloud-download.png" height="100" width="100"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- panel-body -->
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <a ui-sref="contactManage" class="btn btn-primary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            <!-- panel-footer -->
+        </div>
+        <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

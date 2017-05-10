@@ -1,0 +1,18 @@
+<div class="Account_navi">
+    <ul>
+        <li><a ng-click="index()" ng-class="{active: activeProfile == true}" href="javascript:void(0)"><i class="fa-eye fa"> </i>&nbsp; Profile</a> </li>
+        <li><a ng-click="ownerInvoice()" ng-class="{active: activeOwnerInvoice == true}" href="javascript:void(0)"><i class="fa-futbol-o fa"></i> &nbsp; Owner Invoices </a></li>
+        <li><a ng-click="renterInvoice()" ng-class="{active: activeRenterInvoice == true}" href="javascript:void(0)"><i class="fa-user fa"></i> &nbsp; Renter Invoices </a></li>
+        <li><a ng-class="{active: activeDispute == true}" href="javascript:void(0)" ng-click="raiseDisputeLoad()"><i class="fa-universal-access fa"></i> &nbspRaise a Dispute</a></li>
+        <li ng-click="userLogout()"><a href="javascript:void(0);"><i class="fa-sign-out  fa"></i> &nbsp; Logout </a></li>
+    </ul>
+    <div class="verify-box">
+        <div class="mobile-verify-box">
+            <i class="fa-mobile fa"></i> {{(profile.otpVerfied === 0)?'Mobile Not Verified':'Mobile Verified'}} <span ng-class="{mobred: profile.otpVerfied == 0}"><i class="{{(profile.otpVerfied === 0)?'fa-times-circle-o fa':'fa-check-circle-o fa'}}"></i></span>
+        </div>
+        <div class="mobile-verify-box">
+            <i class="fa-envelope-square fa"></i> Email Verified<span><i class="fa-check-circle-o fa"></i></span>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>

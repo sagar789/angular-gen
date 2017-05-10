@@ -1,0 +1,74 @@
+<div class="col-lg-6 col-sm-12 col-md-6">
+    <form name="profileForm" ng-submit="profileUpdate()" novalidate="true">
+        <div class="Myaccount_edit_block">
+            <div class="Myaccount_profile_img">
+                <img src="/front/images/user-profile-img1.jpg" alt="User Profile" />
+                <h2>My <span>Profile</span></h2>
+            </div>
+            <div class="Myaccount_profile_box">
+                <label>First Name:</label>
+                <input type="text" class="Textbox1" name="fname" ng-model="profile.fname" required />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.fname.$dirty) && profileForm.fname.$error.required">Please enter first name.</label>
+                <label>Last Name:</label>
+                <input type="text" class="Textbox1" name="lname" ng-model="profile.lname" required />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.lname.$dirty) && profileForm.lname.$error.required">Please enter last name.</label>
+                <label>Address:</label>
+                <input type="text" class="Textbox1" name="address1" ng-model="profile.address" required />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.address1.$dirty) && profileForm.address1.$error.required">Please enter address.</label>
+                <!-- <label>Address Line 2:</label>
+                <input type="text" class="Textbox1" name="address2" ng-model="profile.address2" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.address2.$dirty) && profileForm.address2.$error.required">Please enter address 2.</label> -->
+                <label>Suburb:</label>
+                <input type="text" class="Textbox1" name="suburb" ng-model="profile.suburb" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.suburb.$dirty) && profileForm.suburb.$error.required">Please enter suburb.</label>
+                <label>State:</label>
+                <input type="text" class="Textbox1" name="state" ng-model="profile.state" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.state.$dirty) && profileForm.state.$error.required">Please enter state.</label>
+                <label>Postcode:</label>
+                <input type="text" class="Textbox1" name="postcode" ng-model="profile.postcode" ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" maxlength="6" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.postcode.$dirty) && profileForm.postcode.$error.required">Please enter valid postcode.</label>
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.postcode.$dirty) && profileForm.postcode.$error.pattern">Please enter valid.</label>
+                <label>Licence State:</label>
+                <input type="text" class="Textbox1" name="lstate" ng-model="profile.lstate" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.lstate.$dirty) && profileForm.lstate.$error.required">Please enter Licence state.</label>
+                <label>Licence Number:</label>
+                <input type="text" class="Textbox1" name="lnumber" ng-model="profile.lnumber" ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" />
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.lnumber.$dirty) && profileForm.lnumber.$error.required">Please enter licence number.</label>
+                <label class="error" ng-show="(profileForm.$submitted || profileForm.lnumber.$dirty) && profileForm.lnumber.$error.pattern">Please enter valid licence number.</label>
+                <label>Email:</label>
+                <input type="text" class="Textbox1" ng-model="profile.email" ng-disabled="true" />
+                <label>Phone:<span style="float: right;"><a href="javascript:void(0);" ng-click="resendOtp()">{{(profile.otpVerfied === 0)?'(Resend OTP)':''}}</a></span></label> 
+                <input type="text" class="Textbox1" ng-model="profile.mobile" ng-disabled="true" />
+                <input type="submit" class="Btn-type1" value="Update Profile" ng-disabled="checkDisable()" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="col-lg-6 col-sm-12 col-md-6">
+    <form name="signinpForm" ng-submit="changePass()" novalidate="true">
+        <div class="Myaccount_edit_block">
+            <div class="Myaccount_profile_img">
+                <img src="/front/images/change-password-img.jpg" alt="User Profile" />
+                <h2>Change <span>Password</span></h2>
+            </div>
+            <div class="Myaccount_profile_box">
+                <label>Old Password:</label>
+                <input type="password" class="Textbox1" name="oldpassword" ng-model="resform.oldpassword" required />
+                <label class="error" ng-show="(signinpForm.$submitted || signinpForm.oldpassword.$dirty) && signinpForm.oldpassword.$error.required">
+                    Please enter old password.</label>
+                <label>New Password:</label>
+                <input type="password" class="Textbox1" name="password" ng-model="resform.password" minlength="8" ng-pattern='"^(?=.*[a-z])(?=.*[0-9])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,}"' required />
+                <label class="error" ng-show="(signinpForm.$submitted || signinpForm.password.$dirty) && signinpForm.password.$error.required">
+                    Please enter new password.</label>
+                <label class="error" ng-show="(signinpForm.$submitted || signinpForm.password.$dirty) && signinpForm.password.$error.minlength">Password should be min 8 character</label>
+                <label class="error" ng-show="(signinpForm.$submitted || signinpForm.password.$dirty) && signinpForm.password.$error.pattern">Password should be combination of letter, number and special character</label>
+                <label>Confirm Password:</label>
+                <input type="password" class="Textbox1" name="cpassword" ng-model="resform.cpassword" compare-to="password" required/>
+                <label class="error" ng-show="(signinpForm.$submitted || signinpForm.cpassword.$dirty) && signinpForm.cpassword.$error.required">
+                    Please enter confirm password.</label>
+                <label class="error" ng-show="signinpForm.cpassword.$error.compareTo">Password does not match.</label>
+                <input type="submit" class="Btn-type1" value="Change Password" />
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,38 @@
+<div class="signinpanel" ng-controller="userCtrl">
+    <div class="row">
+        <div class="col-md-6 col-xs-offset-3">
+            <div class="text-center" style="margin-bottom:20px;"><img src="images/logo.png"></div>
+        </div>
+        <!-- col-sm-5 -->
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xs-offset-3">
+            <form name="signinForm" ng-submit="userLogin()" novalidate="true">
+                <h4 class="nomargin">Sign in</h4>
+                <p class="mt5 mb20">Login to access your Hire My Trailer account.</p>
+                <input type="email" class="form-control uemail" placeholder="Email" name="email" ng-model="regform.email" required />
+                <div class="error">
+                    <label class="error" ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.required">Please enter email.</label>
+                    <label class="error" ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.email">Please enter valid email.</label>
+                </div>
+                <input type="password" class="form-control pword" placeholder="Password" name="password" ng-model="regform.password" required />
+                <div class="error">
+                    <label class="error" ng-show="(signinForm.$submitted || signinForm.password.$dirty) && signinForm.password.$error.required">Please enter password.</label>
+                </div>
+                <a ui-sref="forgotPassword">Forgot Your Password?</a>
+                <input type="submit" class="btn btn-success btn-block" name="submit" value="Sign In" />
+            </form>
+        </div>
+        <!-- col-sm-5 -->
+    </div>
+    <!-- row -->
+    <!-- <div class="signup-footer">
+            <div class="pull-left">
+                &copy; 2014. All Rights Reserved. Bracket Bootstrap 3 Admin Template
+            </div>
+            <div class="pull-right">
+                Created By: <a href="http://themepixels.com/" target="_blank">ThemePixels</a>
+            </div>
+        </div>   -->
+</div>
+<!-- signin -->

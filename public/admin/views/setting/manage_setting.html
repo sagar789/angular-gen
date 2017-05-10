@@ -1,0 +1,45 @@
+<div class="row" ng-controller="settingCtrl" ng-init="loadAllSettings()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Manage Settings</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="addForm" method="post" ng-submit="update()" novalidate enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Application Fee Charge(%):</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="application_fee" class="form-control" ng-model="settingList.application_fee" maxlength="2" required />
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.application_fee.$dirty) && addForm.application_fee.$error.required">Please enter application fee value.</label>
+                                <label class="error" ng-show="(addForm.$submitted || addForm.application_fee.$dirty) && addForm.application_fee.$error.maxlength">Please enter application fee less then 100.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Cancellation Charges:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="calcel_charge" class="form-control" ng-model="settingList.cancel_charge" maxlength="2" required />
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.calcel_charge.$dirty) && addForm.calcel_charge.$error.required">Please enter cancellation charges value.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

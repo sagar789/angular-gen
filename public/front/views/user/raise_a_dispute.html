@@ -1,0 +1,30 @@
+<div class="col-lg-12 col-sm-12 col-md-12">
+    <form name="disputeForm" ng-submit="raiseDispute()" novalidate="true">
+        <div class="Myaccount_edit_block">
+            <h2>Raise a <span>Dispute</span></h2>
+            <div class="Myaccount_profile_box">
+                <label>Name of Renter:</label>
+                <select class="Textbox1" name="name" ng-model="dispute.name" ng-options="option.fullname for option in renterOption track by option.email" required>
+                    <option value="">Select Renter</option>
+                </select>                
+                <label class="error" ng-show="(disputeForm.$submitted || disputeForm.name.$dirty) && disputeForm.name.$error.required">Please select Renter name.</label>
+                <!-- <label>Hired Trailer From/To:</label>
+                <input type="text" class="Textbox1" name="from" ng-model="dispute.from" required />
+                <label class="error" ng-show="(disputeForm.$submitted || disputeForm.from.$dirty) && disputeForm.from.$error.required">Please enter From/To date.</label> -->
+                <label>Trailer return condition:</label>
+                <select class="Textbox1" name="condition" ng-model="dispute.condition" ng-options="option.name for option in conditionOption track by option.id" required>
+                    <option value="">Select Condition </option>
+                </select> 
+                <label class="error" ng-show="(disputeForm.$submitted || disputeForm.condition.$dirty) && disputeForm.condition.$error.required">Please select trailer condition.</label>
+                <label>Reason for Dispute:</label>
+                <textarea class="Textarea" cols="" rows="" name="textarea" ng-model="dispute.textarea" required></textarea>
+                <label class="error" ng-show="(disputeForm.$submitted || disputeForm.textarea.$dirty) && disputeForm.textarea.$error.required">Please enter Reason for Dispute.</label>
+                <label>
+                    <input type="checkbox" name="check" ng-model="dispute.check" required/> I agree to the terms &amp; condition.
+                </label>
+                <label class="error" ng-show="(disputeForm.$submitted || disputeForm.check.$dirty) && disputeForm.check.$error.required">Please accept terms & condition.</label>
+                <input type="submit" class="Btn-type1" value="Submit" />
+            </div>
+        </div>
+    </form>
+</div>

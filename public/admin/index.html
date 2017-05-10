@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hire My Trailer</title>
+    <link rel="shortcut icon" type="image/png" href="/admin/images/favicon-16x16.png">
+    <link href="/admin/css/style.default.css" rel="stylesheet">
+    <link rel="stylesheet" href="../front/css/angular-notify.min.css">
+    <link rel="stylesheet" href="../front/css/angular-datepicker.css">
+    <!-- <link rel="stylesheet" href="/admin/css/angular-dropdownMultiselect.css"> -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body ng-class="{signin: (showMiddle == false), notfound:(swNotFnd== true)}">
+    <div ng-class="{seprecon: showLoading == true}"></div>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+    <section>
+        <div ui-view="leftbar"></div>
+        <div ng-include src="'views/sidebar/leftbar.html'" ng-if="showMiddle"></div>
+        <!-- leftpanel -->
+        <div class="mainpanel" ng-if="showMiddle">
+            <div ng-include src="'views/header/header.html'"></div>
+            <!-- headerbar -->
+            <div class="pageheader crumb">
+                <!-- <h2><i class="fa fa-home"></i> Dashboard <span>Subtitle goes here...</span></h2> -->
+                <div class="breadcrumb-wrapper">
+                    <ol class="breadcrumb">
+                        <li class="active"><a ui-sref="dashboard">Dashboard</a></li>
+                        <li class="active">{{crumbTitle}}</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="contentpanel">
+                <div ui-view="middle"></div>
+            </div>
+            <!-- contentpanel -->
+        </div>
+    </section>
+    <script src="/admin/ckeditor/ckeditor.js"></script>
+    <script src="/admin/libs/jquery-1.10.2.min.js"></script>
+    <script src="/admin/libs/bootstrap.min.js"></script>
+    <!-- <script src="/admin/libs/flot.min.js"></script>
+    <script src="/admin/libs/flot.pie.min.js"></script> -->
+    <script src="/admin/libs/custom.js"></script>
+    <script src="../libs/ng/angular.min.js"></script>
+    <script src="../libs/ng/angular-ui-router.min.js"></script>
+    <script src="../libs/ng/angular-notify.min.js"></script>
+    <script src="../libs/ng/ngStorage.min.js"></script>
+    <script src="../libs/ng/ng-file-upload-shim.min.js"></script>
+    <script src="../libs/ng/ng-file-upload.min.js"></script>
+    <script src="../libs/ng/angular-datepicker.js"></script>
+    <script src="../config.js"></script>
+    <script src="adminApp.js"></script>
+    <script src="js/ng-ckeditor.min.js"></script>
+    <script src="js/controllers/dashboardController.js"></script>
+    <script src="js/controllers/userController.js"></script>
+    <script src="js/controllers/trailerController.js"></script>
+    <script src="js/controllers/cmsController.js"></script>
+    <script src="js/controllers/bookTrailerController.js"></script>
+    <script src="js/controllers/daileyRateController.js"></script>
+    <script src="js/controllers/notificationController.js"></script>
+    <script src="js/controllers/faqController.js"></script>
+    <script src="js/controllers/helpController.js"></script>
+    <script src="js/controllers/paymentController.js"></script>
+    <script src="js/controllers/settingsController.js"></script>
+    <script src="js/directives/commonDirective.js"></script>
+    <script src="../services/commonServices.js"></script>
+    <script src="../services/userFactory.js"></script>
+    <script src="js/dirPagination.js"></script>
+    <script src="js/angularjs-dropdown-multiselect.js"></script>
+</body>
+
+</html>

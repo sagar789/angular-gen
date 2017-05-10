@@ -1,0 +1,195 @@
+<!-- <div ng-controller="pageCtrl" ng-init="loadPages(5)">
+    <div ng-bind-html="description"></div>
+</div> -->
+<div ng-controller="pageCtrl" ng-init="loadHelpCat(1)">
+    <!--  <div class="Inner-Page-Banner">
+        <h1><span>Help</span> Center</h1>
+        <form name="searchForm" ng-submit="getSearchData()" novalidate="true">
+            <div class="Quick-search">
+                <input type="text" class="Inputtype1" placeholder="Keyword Search..." ng-model="search.data" />
+            </div>
+        </form>
+    </div> -->
+    <!--Div class Home_block1 Block start here -->
+    <!-- <div class="Page_content_block">
+        <div class="container">
+            <div class="row">
+                <div id="element" class="help_faq_mob"></div>
+            </div>
+        </div>
+    </div> -->
+    <div class="Inner-Page-Banner">
+        <h1><span>Having trouble?</span>We're here to help</h1>
+        <div ng-include src="'front/views/main/search_help.html'"></div>
+    </div>
+    <!--Div class Home_block1 Block start here -->
+    <div class="FAQ_content_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-5 col-md-3 ">
+                    <div class="Account-left">
+                        <div class="Account_navi">
+                            <ul>
+                                <li ng-repeat="dt in categoryList | orderBy:'id'">
+                                    <a ui-sref="helpcat({Id:dt.id})" ng-class="{active: act{{dt.id}} == true}"><i class="fa-truck fa"> </i>&nbsp; {{dt.category_name}}</a>
+                                </li>
+                                <!-- <li><a href="#" ng-class="{active: activeOwHl == true}" ng-click="loadRenterHelp(2)"><i class="fa-user fa"></i> &nbsp;For Owner</a></li> -->
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-sm-7 col-md-9 FAQ-right">
+                    <div class="h_signup_m">
+                        <h3><a ui-sref="help({Id:mainid})">{{mainTit}}</a> > {{catTitle}}</h3>
+                        <!--  <div class="help_sign_btn"><a href="#">Sign in</a></div> -->
+                    </div>
+                    <div class="row">
+                        <div class="help_services_listpage">
+                            <h1>{{data.question_category}}</h1>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl" ng-repeat="data in reCatListArr | limitTo:helpLength:0">
+                                    <div class="help_services_listpage_in">
+                                        <h2>{{data.question_category}}</h2>
+                                        <ul>
+                                            <li ng-repeat="d in data.data_arr"><a ui-sref="helpanscat({Id:d.id})">{{d.question}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl" ng-repeat="data in reCatListArr | limitTo:helpLengthAll:helpLength">
+                                    <div class="help_services_listpage_in">
+                                        <h2>{{data.question_category}}</h2>
+                                        <ul>
+                                            <li ng-repeat="d in data.data_arr"><a ui-sref="helpanscat({Id:d.id})">{{d.question}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <div class="help_single_blocl" ng-repeat="data in reCatListArr">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2>{{data.question_category}}</h2>
+                                        <ul>
+                                            <li ng-repeat="d in data.data_arr"><a ui-sref="helpanscat({Id:d.id})">{{d.question}}</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!--  <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-group" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Accessibility</a></h2>
+                                        <ul>
+                                            <li><a href="#">How to use VoiceOver</a></li>
+                                            <li><a href="#">What is HMT’s policy about service animals and assistive devices?</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-credit-card" aria-hidden="true"></i></i>
+                                    </div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Account and Payment</a></h2>
+                                        <ul>
+                                            <li><a href="#">I can't sign in or request a ride</a></li>
+                                            <li><a href="#">Account Settings and Ratings</a></li>
+                                            <li><a href="#">Notifications</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-key" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Driving with HMT</a></h2>
+                                        <ul>
+                                            <li><a href="#">Sign up to drive</a></li>
+                                            <li><a href="#">Need more info about signing up to drive?</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-gift" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Delivery</a></h2>
+                                        <ul>
+                                            <li><a href="#">Where is HMT EATS available?</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-trophy" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Events and Inquiries</a></h2>
+                                        <ul>
+                                            <li><a href="#">Press, Law Enforcement, and Other Requests</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="help_single_blocl">
+                                    <div class="help_single_blocl_icon"><i class="fa fa-briefcase" aria-hidden="true"></i></div>
+                                    <div class="help_single_blocl_text_r">
+                                        <h2><a href="#">Business Travel</a></h2>
+                                        <ul>
+                                            <li><a href="#">HMT for Business Overview</a></li>
+                                            <li><a href="#">Admin Accounts</a></li>
+                                            <li><a href="#">Employee Accounts</a></li>
+                                        </ul>
+                                        <p><a href="#">More &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+    <div class="help_services_in_foter">
+        <div class="col-md-6">
+            <div class="help_single_blocl">
+                <div class="help_single_blocl_icon"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                <div class="help_single_blocl_text_r">
+                    <h2>Get help in the app</h2>
+                    <ul>
+                        <li>Just head to "HELP" in the HMT app navigation.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="help_single_blocl">
+                <div class="help_single_blocl_icon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+                <div class="help_single_blocl_text_r">
+                    <h2>Follow us on Twitter</h2>
+                    <ul>
+                        <li>Get the latest status on the app, or tweet to us with any questions you have.</li>
+                    </ul>
+                    <p><a href="#">Follow @HMT_Support &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

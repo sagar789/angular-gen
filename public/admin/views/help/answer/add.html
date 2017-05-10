@@ -1,0 +1,99 @@
+<div class="row" ng-controller="helpCtrl">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Add Answer </h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="addForm" method="post" ng-submit="addHelpA()" novalidate enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Role:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="role" ng-model="blogData.role" ng-options="option.name for option in roleOption track by option.id" required ng-change="getHelpcatList(blogData.role.id)">
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.status.$dirty) && addForm.role.$error.required">Please select role.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Help Category:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="category" ng-model="blogData.help_category_id" ng-options="option.category_name for option in categoryList track by option.id" ng-change="getQuestioncatList(blogData.help_category_id.id)" required>
+                                <option value="">Select Category</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.category.$dirty) && addForm.category.$error.required">Please select Category.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Question Category:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="category" ng-model="blogData.help_question_category_id" ng-options="option.question_category for option in questionCatList track by option.id" ng-change="getQuestionListAll(blogData.help_question_category_id.id)" required>
+                                <option value="">Select Category</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.category.$dirty) && addForm.category.$error.required">Please select Category.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Question :</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="category" ng-model="blogData.help_question_id" ng-options="option.question for option in ansList track by option.id" required>
+                                <option value="">Select Category</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.category.$dirty) && addForm.category.$error.required">Please select Category.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Answer:</label>
+                        <div class="col-sm-5">
+                            <textarea ckeditor="editorOptions" ng-model="blogData.answer"></textarea>
+                        </div>
+                    </div>
+                   <!--  <div class="form-group">
+                        <label class="col-sm-4 control-label">Answer:</label>
+                        <div class="col-sm-4">
+                            <div class="col-sm-5">
+                                <textarea ckeditor="editorOptionsOne" ng-model="blogData.answer"></textarea>
+                            </div>
+                            <textarea rows="8" cols="70" name="blog_title" ng-model="blogData.answer" required></textarea>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.blog_title.$dirty) && addForm.blog_title.$error.required">Please enter Question category.</label>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-group">
+                        <label class="col-sm-4 control-label">Description:</label>
+                        <div class="col-sm-4">
+                           
+                            <textarea rows="8" cols="70" name="blog_content" ng-model="blogData.blog_content" required></textarea>
+                            <div class="error">
+                                <label class="error" ng-show="(addForm.$submitted || addForm.blog_content.$dirty) && addForm.blog_content.$error.required">Please enter content.</label>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <input type="hidden" name="blog_user_id" class="form-control" ng-model="blogData.blog_user_id" value="1" />
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

@@ -1,0 +1,222 @@
+<div class="row" ng-controller="userCtrl" ng-init="editUser()">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="subtitle mb5">View User Detail</h5>
+                <p class="mb20"></p>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Image:</label>
+                    <div class="col-sm-8">
+                        <img class="propImg" src="/front/images/userpic/thumb/{{propEdImg}}" width="200" height="150" ng-if="(propEdImg.length > 0)">
+                        <img class="propImg" src="/front/images/no_image.png" width="200" height="150" ng-if="(propEdImg.length == 0)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Email:</label>
+                    <div class="col-sm-8">
+                        {{userData.email}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Mobile:</label>
+                    <div class="col-sm-8">
+                        {{userData.mobile}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">First Name:</label>
+                    <div class="col-sm-8">
+                        {{userData.fname}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Last Name:</label>
+                    <div class="col-sm-8">
+                        {{userData.lname}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Address:</label>
+                    <div class="col-sm-8">
+                        {{userData.address}}
+                    </div>
+                </div>
+                <!-- <div class="form-group">
+                    <label class="col-sm-4 control-label">Address Line-2:</label>
+                    <div class="col-sm-8">
+                        {{userData.address_line_2}}
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Suburb:</label>
+                    <div class="col-sm-8">
+                        {{userData.suburb}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Licence Number:</label>
+                    <div class="col-sm-8">
+                        {{userData.lnumber}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Licence State:</label>
+                    <div class="col-sm-8">
+                        {{userData.licence_state}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Postcode:</label>
+                    <div class="col-sm-8">
+                        {{userData.postcode}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">State:</label>
+                    <div class="col-sm-8">
+                        {{userData.state}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Promo Code:</label>
+                    <div class="col-sm-8">
+                        {{userData.promo_code}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Is Suspended:</label>
+                    <div class="col-sm-8">
+                        {{userData.issuspend.name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Status:</label>
+                    <div class="col-sm-8">
+                        {{userData.status.name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Notification Allow:</label>
+                    <div class="col-sm-8">
+                        {{userData.is_notification.name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Negative Balance:</label>
+                    <div class="col-sm-8">
+                        {{userData.balance | currency}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Created:</label>
+                    <div class="col-sm-8">
+                        {{userData.created | date:"MM/dd/yyyy 'at' h:mma"}}
+                    </div>
+                </div>
+            </div>
+            <!-- panel-body -->
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <a ui-sref="userManage" class="btn btn-primary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            <!-- panel-footer -->
+        </div>
+        <!-- panel-default -->
+        </form>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="subtitle mb5">Invoice List As Renter</h5>
+                <p class="mb20"></p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb30">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Booking Id</th>
+                                <th>Trailer </th>
+                                <th>Amount Paid </th>
+                                <th>Agreement</th>
+                                <th>Invoice </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr ng-repeat="data in invoiceReList"> -->
+                            <tr dir-paginate="data in invoiceReList | filter:dataSearch | itemsPerPage: pageReSize" current-page="currentRePage" pagination-id="cust">
+                                <td>{{data.created | date : 'mediumDate'}}</td>
+                                <td>{{data.booking_id}}</td>
+                                <td>{{data.size}}, {{data.trailer_type}}</td>
+                                <td>{{data.paid_amount | currency}}</td>
+                                <td><a href="#"><i class="fa-file-pdf-o fa">&nbsp;</i></a> </td>
+                                <td><a title="download invoice" href="/front/invoices/{{data.invoice}}" target="_self"><span class="glyphicon glyphicon-file fa-2x"></span></a></td>
+                            </tr>
+                            <tr class="text-center" ng-hide="(invoiceReList.length > 0)">
+                                <td colspan="6" class="col-md-5">There is no invoice available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <div class="pull-right">
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html" pagination-id="cust"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table-responsive -->
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="subtitle mb5">Invoice List As Owner</h5>
+                <p class="mb20"></p>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered mb30">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Booking Id</th>
+                                <th>Trailer </th>
+                                <th>Amount Paid </th>
+                                <th>Agreement</th>
+                                <th>Invoice </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr ng-repeat="data in invoiceOwList"> -->
+                            <tr dir-paginate="data in invoiceOwList | filter:dataSearch | itemsPerPage: pageOwSize" current-page="currentOwPage" pagination-id="branch">
+                                <td>{{data.created | date : 'mediumDate'}}</td>
+                                <td>{{data.booking_id}}</td>
+                                <td>{{data.size}}, {{data.trailer_type}}</td>
+                                <td>{{data.paid_amount | currency}}</td>
+                                <td><a href="#"><i class="fa-file-pdf-o fa">&nbsp;</i></a> </td>
+                                <td><a title="download invoice" href="/front/invoices/{{data.invoice}}" target="_self"><span class="glyphicon glyphicon-file fa-2x"></span></a></td>
+                            </tr>
+                            <tr class="text-center" ng-hide="(invoiceOwList.length > 0)">
+                                <td colspan="6" class="col-md-5">There is no invoice available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center">
+                        <div class="pull-right">
+                            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html" pagination-id="branch"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- table-responsive -->
+        </div>
+    </div>
+</div>
+<!-- row -->

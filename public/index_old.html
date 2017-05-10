@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" data-ng-app="myApp">
+
+<head>
+    <meta name="fragment" content="!" />
+    <meta charset="utf-8" />
+    <title>Home </title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <meta name="description" content="Convenient, cheaper and fully insured
+    person to person trailer hire all from your iPhone or Android phone. Register
+    now." />
+    <meta name="author" content="Hire My Trailer">
+    <meta name="keywords" content="Cage trailer hire, car carrier trailer, car
+    trailer hire, car transport trailer, enclosed trailer, hire trailer, machinery
+    carrier, trailer rentals, rent a trailer, peer to peer, peer-to-peer, rent a
+    trailer, rent enclosed trailer, rent equipment trailer, rent trailer, rent
+    uhaul trailer, rent vehicle, rent your trailer, trailer 4 hire, trailer 4 rent,
+    trailer hire, hire my trailer, rent box trailer, rent car trailer, rent caged
+    trailer, trailer rentals, rent bike carrier, hire bike carrier, hire car
+    trailer" />
+    <meta property="og:url" content="http://111.93.51.244:3000/" />
+    <meta property="og:title" content="Person to Person Trailer Rental | The easy way to hire | Cage Trailer Hire" />
+    <meta property="og:site_name" content="Hire My Trailer" />
+    <meta property="og:description" content="Convenient, cheaper and fully insured person to person trailer hire all from your iPhone or Android phone. Register now" />
+    <meta property="og:type" content="" />
+    <meta property="og:image" content="front/images/logo.png" />
+    <meta property="og:locale" content="en_us" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="">
+    <meta name="twitter:creator" content="@hiremytrailer">
+    <meta name="twitter:title" content="Person to Person Trailer Rental | The easy way to hire | Cage Trailer Hire">
+    <meta name="twitter:description" content="Convenient, cheaper and fully insured person to person trailer hire all from your iPhone or Android phone. Register now">
+    <meta property="fb:admins" content="" />
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <link rel="canonical" href="" />
+    <link rel="alternate" href="" hreflang="en-us" />
+    <meta name="Googlebot" content="index, follow" />
+    <meta name="robots" content="FOLLOW, INDEX">
+    <link href="" rel="publisher" />
+    <link rel="Author" href="" />
+    <!-- Hire My trailer styles -->
+    <link rel="shortcut icon" type="image/png" href="front/images/favicon-16x16.png" />
+    <link href="front/css/bootstrap.css" rel="stylesheet" />
+    <link href="front/css/style.css" rel="stylesheet" />
+    <link href="front/css/responsive.css" rel="stylesheet" />
+    <link href="front/css/custom-style.css" rel="stylesheet" />
+    <link href="front/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="front/css/angular-notify.min.css" />
+    <link href="front/css/owl.carousel.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div data-ng-class="{seprecon: showLoading == true}"></div>
+    <!--Div class nabar-fixed-top start here -->
+    <div data-ui-view="header"></div>
+    <!--Div class nabar-fixed-top End here -->
+    <div data-ui-view="middle"></div>
+    <div data-ui-view="footer"></div>
+    <!--Model Box Start here -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="userCtrl">
+        <div class="modal-dialog" role="document">
+            <form name="signinForm" data-ng-submit="userLogin()" novalidate>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel"><i class="fa-user fa"></i> &nbsp; User Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Email</label>
+                        <input type="email" class="Inputtype1" placeholder="Email" name="email" data-ng-model="regform.email" required />
+                        <label class="error" data-ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.required">Please enter email.</label>
+                        <label class="error" data-ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.email">Please enter valid email.</label>
+                    </div>
+                    <div class="modal-body">
+                        <label>Password</label>
+                        <input type="password" class="Inputtype1" placeholder="Password" name="password" data-ng-model="regform.password" required />
+                        <label class="error" data-ng-show="(signinForm.$submitted || signinForm.password.$dirty) && signinForm.password.$error.required">Please enter password.</label>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="pull-left">
+                            <input type="checkbox" name="remember" data-ng-checked="true" /> Remember me.
+                            <br/><a data-ng-click="openForgotPass()" href="javascript:void(0);">Forgot password</a> </p>
+                        <button type="submit" class="btn Button1"><i class="fa-lock fa"></i> &nbsp; login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="myModalForgotPass" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" data-ng-controller="userCtrl">
+        <div class="modal-dialog" role="document">
+            <form name="forgotForm" data-ng-submit="forgotPass()" novalidate>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1"><i class="fa-user fa"></i> &nbsp; Forgot Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        <label>Email</label>
+                        <input type="email" class="Inputtype1" placeholder="Email" name="email" data-ng-model="forgotform.email" required />
+                        <label class="error" data-ng-show="(forgotForm.$submitted || forgotForm.email.$dirty) && forgotForm.email.$error.required">Please enter email.</label>
+                        <label class="error" data-ng-show="(forgotForm.$submitted || forgotForm.email.$dirty) && forgotForm.email.$error.email">Please enter valid email.</label>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="pull-left">
+                            <a data-ng-click="openLoginPop()" href="javascript:void(0)">Back to Login</a>
+                        </p>
+                        <button type="submit" class="btn Button1"><i class="fa-lock fa"></i> &nbsp; Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Model Box End here -->
+    <!-- Hire My trailer javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="dist/hmt.min.js"></script>
+    <script src="dist/hmt.minc.js"></script> -->
+    <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/bootstrap.min.js"></script>
+    <script type="text/javascript" src="libs/ng/angular.min.js"></script>
+    <script type="text/javascript" src="libs/ng/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="libs/ng/ngStorage.min.js"></script>
+    <script type="text/javascript" src="libs/ng/angular-notify.min.js"></script>
+    <script type="text/javascript" src="libs/ng/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="libs/ng/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="front/frontApp.js"></script>
+    <script type="text/javascript" src="front/js/directives/commonDirective.js"></script>
+    <script type="text/javascript" src="services/commonServices.js"></script>
+    <script type="text/javascript" src="services/userFactory.js"></script>
+    <script type="text/javascript" src="front/js/controllers/userController.js"></script>
+    <script type="text/javascript" src="front/js/controllers/pageController.js"></script>
+    <script type="text/javascript" src="front/js/controllers/mapController.js"></script>
+    <script type="text/javascript" src="front/js/dirPagination.js"></script>
+    <!-- <script type="text/javascript" src="libs/ng/angucomplete.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyD6URH8fTVj1fzaEiXVIYAMwkaijBNlea0"></script>
+    <script type="text/javascript" src="front/js/angularjs-google-maps.js"></script>
+    <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script> -->
+</body>
+
+</html>

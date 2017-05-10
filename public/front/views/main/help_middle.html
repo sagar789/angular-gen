@@ -1,0 +1,41 @@
+<h2 class="text-center">Frequently Asked Questions</h2>
+<div class="faq-box">
+    <ul>
+        <li><a href="javascript:void(0)" ui-sref="faqListing({Id:1})">What is HireMyTrailer</a></li>
+        <li><a href="javascript:void(0)" ui-sref="faqListing({Id:2})">Cancellation Policy </a></li>
+        <li><a href="javascript:void(0)" ui-sref="faqListing({Id:3})">Is Insurance Provided</a></li>
+    </ul>
+</div>
+<div class="faq-box">
+    <ul>
+        <li><a href="javascript:void(0)" ui-sref="faqListing({Id:4})">Pricing</a></li>
+        <li><a href="javascript:void(0)" ui-sref="faqListing({Id:5})">Rental Agreement </a></li>
+    </ul>
+</div>
+<div class="clear"></div>
+<div class="Faq-block1">
+    <div class="Faq-guide-box">
+        <div class="Faq-guide-img"><img src="front/images/renter-guide-img1.png" alt="Renter Guide" /> </div>
+        <div class="Faq-guide-text">
+            <h3>Renter Guide</h3>
+            <p ng-repeat="n in dataTrack | limitTo:3:6 | orderBy:'id'"><a ui-sref="helpRenterDetail({Id:n.id})">{{n.title}}</a></p>
+            <!-- <button class="btn">MORE</button> -->
+        </div>
+    </div>
+    <div class="Faq-guide-box1">
+        <div class="Faq-guide-img"><img src="front/images/owner-guide-img.png" alt="Owner Guide" /> </div>
+        <div class="Faq-guide-text">
+            <h3>Owners Guide</h3>
+            <p ng-repeat="n in dataTrack | limitTo:3:3 | orderBy:'id'"><a ui-sref="helpOwnerDetail({Id:n.id})">{{n.title}}</a></p>
+            <!-- <button class="btn">MORE</button> -->
+        </div>
+    </div>
+    <div class="Faq-guide-box2">
+        <div class="Faq-guide-img"><img src="front/images/policies-img.png" alt="Policies" /> </div>
+        <div class="Faq-guide-text">
+            <h3>Policies</h3>
+            <p ng-repeat="n in dataTrack | limitTo:3:0 | orderBy:'id'"><a ui-sref="helpPoliciesDetail({Id:n.id})">{{n.title}}</a></p>
+            <!-- <button class="btn">MORE</button> -->
+        </div>
+    </div>
+</div>

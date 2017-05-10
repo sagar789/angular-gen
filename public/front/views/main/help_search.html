@@ -1,0 +1,8 @@
+<h2 class="text-center">Search results</h2>
+<div class="notification" ng-repeat="data in dataPage">
+    <h2>{{data.question}}</h2>
+    <p class="time">{{data.answer}}</p>
+</div>
+<div class="notification" ng-hide="(dataPage.length > 0)">
+    No results found for "{{search.data}}"
+</div>

@@ -1,0 +1,31 @@
+<div class="Inner-Page-Banner">
+    <h1><span>Help</span> Center</h1>
+    <div class="Quick-search">
+        <input type="text" class="Inputtype1" placeholder="Keyword Search..." />
+    </div>
+</div>
+<!--Div class Home_block1 Block start here -->
+<div class="FAQ_content_block" ng-controller="pageCtrl" ng-init="loadHelpDetail()">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-sm-5 col-md-3 ">
+                <div class="Account-left">
+                    <h2>Renter Guide</h2>
+                    <div class="Account_navi">
+                        <ul>
+                            <!-- <p ng-repeat="n in dataTrack | limitTo:3:3 | orderBy:'id'"><a ui-sref="helpRenterDetail({Id:8})">{{n.title}}</a></p> -->
+                            <li ng-repeat="n in dataTrack | limitTo:3:6 | orderBy:'id'">
+                                <a href="javascript:void(0);" ng-click="loadHelpDetail(n.id)" ng-class="{active: active{{n.class}} == true}"><i class="fa-eye fa"> </i>&nbsp; {{n.title}}</a> </li>
+                            <!--  <li><a href="javascript:void(0);" ng-click="loadHelpDetail(9)" ng-class="{active: activeSignUp == true}"><i class="fa-sign-out fa"></i> &nbsp; Signing Up </a></li>
+                            <li><a href="javascript:void(0);" ng-click="loadHelpDetail(10)" ng-class="{active: activeTrailerOpt == true}"><i class="trailer-icon"></i> &nbsp; Trailer Options </a></li> -->
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-sm-7 col-md-9 FAQ-right">
+                <div id="element"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,181 @@
+<div class="row" ng-controller="userCtrl" ng-init="editUser()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Edit User</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="updateForm" ng-submit="updateUser()" novalidate="true">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Email:</label>
+                        <div class="col-sm-4">
+                            <input type="email" name="email" class="form-control" ng-model="userData.email" ng-disabled="true" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.email.$dirty) && updateForm.email.$error.required">Please enter email.</label>
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.email.$dirty) && updateForm.email.$error.email">Please enter valid email.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Image:</label>
+                        <div class="col-sm-8">
+                            <input accept="/image/jpeg" type="file" name="propImg" onChange="angular.element(this).scope().previewImage(this)" ng-model="userData.propEdImg" />
+                            <!-- <img class="propImg" ng-src="/admin/images/uploadfile.png" ng-if="!propImg" width="100" height="80"> -->
+                            <img class="propImg" ng-if="propImg" ng-src="{{propImg}}" ng-if="propImg.indexOf('.jpeg') === -1 && propImg.indexOf('.jpg') === -1 && propImg.indexOf('.png') === -1" width="200" height="150">
+                            <img class="propImg" ng-if="!propImg" ng-src="/front/images/userpic/thumb/{{propEdImg}}" ng-if="propEdImg.indexOf('.jpeg') > -1 || propEdImg.indexOf('.jpg') > -1 || propEdImg.indexOf('.png') > -1" width="200" height="150">
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted) && updateForm.propImg.$error.required">Please select image.</label>
+                                <label class="error" ng-show="fileTypeError">File type not support</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">First Name:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="fname" class="form-control" ng-model="userData.fname" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.fname.$dirty) && updateForm.fname.$error.required">Please enter first name.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Last Name:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="lname" class="form-control" ng-model="userData.lname" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.lname.$dirty) && updateForm.lname.$error.required">Please enter last name.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Mobile:</label>
+                        <div class="col-sm-4">
+                            <input type="number" name="mobile" class="form-control" ng-model="userData.mobile" ng-disabled="true" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.mobile.$dirty) && updateForm.mobile.$error.required">Please enter mobile.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Address:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="address1" class="form-control" ng-model="userData.address" />
+                        </div>
+                    </div>
+                   <!--  <div class="form-group">
+                        <label class="col-sm-4 control-label">Address Line 2:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="address2" class="form-control" ng-model="userData.address_line_2" />
+                        </div>
+                    </div> -->
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Suburb:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="suburb" class="form-control" ng-model="userData.suburb" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">State:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="state" class="form-control" ng-model="userData.state" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Postcode:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="postcode" class="form-control" ng-model="userData.postcode" ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" maxlength="6" />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.postcode.$dirty) && updateForm.postcode.$error.pattern">Please enter valid postcode.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Licence State:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="lstate" class="form-control" ng-model="userData.licence_state" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Licence Number:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="lnumber" class="form-control" ng-model="userData.lnumber" ng-pattern="/^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/" />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.lnumber.$dirty) && updateForm.lnumber.$error.pattern">Please enter valid licence number.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Promo Code:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="promo" class="form-control" ng-model="userData.promo_code" ng-disabled="true" />
+                            <!-- <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.address.$dirty) && updateForm.address.$error.required">Please enter address.</label>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Suspended</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="issuspend" ng-model="userData.issuspend" ng-options="option.name for option in suspendedOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm. issuspend.$dirty) && updateForm.    issuspend.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="status" ng-model="userData.status" ng-options="option.name for option in statusOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.status.$dirty) && updateForm.status.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Notification Allow</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="is_notification" ng-model="userData.is_notification" ng-options="option.name for option in notifOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm. is_notification.$dirty) && updateForm.    is_notification.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Dispute</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="is_dispute" ng-model="userData.is_dispute" ng-options="option.name for option in disputeOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm. is_dispute.$dirty) && updateForm.    is_dispute.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4">
+                            <a ui-sref="userManage" class="btn btn-warning">cancel</a>
+                            <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                        </div>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

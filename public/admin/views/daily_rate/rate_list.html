@@ -1,0 +1,85 @@
+<div class="row" ng-controller="rateCtrl" ng-init="loadAll()">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            <h5 class="subtitle mb5">{{userTitle}}</h5>
+            <div class="items_leave2nd">
+                <div class="col-md-2  text-left" ng-show="(list.length > 0)">
+                    <label for="search">items per page:</label>
+                    <select ng-model="pageSize" class="form-control mb15" ng-change="selectPageSize(pageSize)" ng-options="option  for option in paginationOption" style="width:90px;">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 header_search_box_right pull-right">
+            <p class="mb20">
+                <div class="dataTables_search" id="table1_filter">
+                    <label>Search:
+                        <input type="text" aria-controls="table1" ng-model="dataSearch" placeholder="Search">
+                    </label>
+                </div>
+            </p>
+        </div>
+    </div>
+    <!-- <div class="col-md-4 margin-botton">
+            <a ui-sref="addRate" class="btn btn-lightblue pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Daily Rate</a>
+        </div> -->
+    <div class="table-responsive">
+        <table class="table table-bordered mb30">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Trailer Type</th>
+                    <th>Trailer Size</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- dir-paginate="data in list | filter:dataSearch | itemsPerPage: pageSize" -->
+                <tr ng-repeat="data in list" current-page="currentPage">
+                    <td>{{$index+1+fromRecord}} </td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.label}}</td>
+                    <td>{{data.duration}}</td>
+                    <td>{{data.price | currency}}</td>
+                    <td>{{data.created | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                    <td class="table-action">
+                        <a ui-sref="editRate({Id:data.id})"><i class="fa fa-pencil"></i></a>
+                        <!-- <a href="javascript:void(0)" ng-click="delete(data.id)" class="delete-row"><i class="fa fa-trash-o"></i></a> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-md-12 text-center not-found" ng-show="(list |filter:dataSearch).length == 0">
+            <span>There is no data available</span>
+        </div>
+        <div class="text-center">
+            <div class="pull-right">
+                <!-- <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../admin/views/dirPagination.tpl.html"></dir-pagination-controls> -->
+                <ul class="pagination" ng-if="1 < numberingLength">
+                    <li ng-class="{ disabled : currentPage == 1 }">
+                        <a href="" ng-click="setCurrent(1)">&laquo;</a>
+                    </li>
+                    <li ng-class="{ disabled : currentPage == 1 }">
+                        <a href="" ng-click="setCurrent(currentPage - 1)">&lsaquo;</a>
+                    </li>
+                    <li ng-repeat="data in numberingPage" ng-class="{ active : currentPage == data.id, disabled : data.id == '...' }">
+                        <a href="#" ng-click="setCurrent(data.id)"><span>{{data.id}}</span></a>
+                    </li>
+                    <li ng-class="{ disabled : currentPage == numberingLength }">
+                        <a href="" ng-click="setCurrent(currentPage + 1)">&rsaquo;</a>
+                    </li>
+                    <li ng-class="{ disabled : currentPage == numberingLength }">
+                        <a href="" ng-click="setCurrent(numberingLength)">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- table-responsive -->
+</div>
+<!-- col-md-6 -->
+</div>
+<!-- row -->

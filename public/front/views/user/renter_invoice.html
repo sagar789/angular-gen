@@ -1,0 +1,58 @@
+<h2><i class="wheel-img"></i> &nbsp; Renter <span>Invoice</span></h2>
+<br />
+<div class="table-responsive dashboard-table">
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Booking Id</th>
+            <th>Trailer </th>
+            <th>Amount Paid </th>
+            <th>Agreement</th>
+            <th>Invoice </th>
+        </tr>
+        <!-- <tr ng-repeat="data in invoiceReList"> -->
+        <tr dir-paginate="data in invoiceReList | filter:dataSearch | itemsPerPage: pageSize" current-page="currentPage">
+            <td>{{data.created | date : 'mediumDate'}}</td>
+            <td>{{data.booking_id}}</td>
+            <td>{{data.size}}, {{data.trailer_type}}</td>
+            <td>{{data.paid_amount | currency}}</td>
+            <td><a href="#"><i class="fa-file-pdf-o fa">&nbsp;</i></a> </td>
+            <td><a title="download invoice" href="/front/invoices/{{data.invoice}}" target="_self"><i class="fa-file-pdf-o fa">&nbsp;</i></a></td>
+        </tr>
+    </table>
+</div>
+<div class="col-md-12 text-center data-not-found" ng-hide="(invoiceReList.length > 0)">
+    <span>There is no invoice available</span>
+</div>
+<div class="paging-right">
+    <!--  <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav> -->
+    <div class="text-center">
+        <!-- <div class="col-md-1  text-left" ng-show="(invoiceReList.length > 0)">
+            <label for="search">items per page:</label>
+            <input type="number" min="1" max="20" class="form-control" ng-model="pageSize">
+            <select ng-model="pageSize" class="form-control mb15" ng-options="option  for option in paginationOption">
+            </select>
+        </div> -->
+        <div class="pull-right">
+            <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../../front/views/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+    </div>
+</div>

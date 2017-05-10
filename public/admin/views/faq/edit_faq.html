@@ -1,0 +1,67 @@
+<div class="row" ng-controller="faqCtrl" ng-init="editFaq()">
+    <div class="col-md-12">
+        <h5 class="subtitle mb5">Edit FAQ</h5>
+        <p class="mb20"></p>
+        <form id="form1" class="form-horizontal" name="updateForm" ng-submit="updateFaq()" novalidate="true">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Category:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="category" ng-model="blogData.category" ng-options="option.category_name for option in categoryList track by option.faq_id" required>
+                                <option value="">Select Category</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.category.$dirty) && updateForm.category.$error.required">Please select Category.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Question:</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="blog_title" class="form-control" ng-model="blogData.question" required />
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.blog_title.$dirty) && updateForm.blog_title.$error.required">Please enter Question.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Description:</label>
+                        <div class="col-sm-4">
+                            <!--  <textarea name="blog_content" class="form-control" ng-model="blogData.blog_content" required ></textarea> -->
+                            <textarea rows="8" cols="70" name="blog_content" ng-model="blogData.answer" required></textarea>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.blog_content.$dirty) && updateForm.blog_content.$error.required">Please enter content.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">Status:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control mb15" name="status" ng-model="blogData.status" ng-options="option.name for option in statusOption track by option.id" required>
+                                <option value="">Select Your Status (*)</option>
+                            </select>
+                            <div class="error">
+                                <label class="error" ng-show="(updateForm.$submitted || updateForm.status.$dirty) && updateForm.status.$error.required">Please select Status.</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-body -->
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- panel-footer -->
+            </div>
+            <!-- panel-default -->
+        </form>
+    </div>
+</div>
+<!-- row -->

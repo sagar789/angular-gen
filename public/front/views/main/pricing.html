@@ -1,0 +1,104 @@
+
+<div class="Pricing-map" ng-controller="MapCtrl">
+    <div id="map" class="iframe"></div>
+    <div class="Map-search">
+        <div class="search-logo"><img src="front/images/trailer-search-img.png" alt="logo" /></div>
+        <div class="search-box">
+            <form name="searchForm" ng-submit="showSearch()" novalidate="true">
+                <div class="search-location"><img src="front/images/map-location.png" alt="location" />
+                </div>
+                <div class="search-textbox">
+                    <input type="text" gm-places-autocomplete class="searchbox" ng-model="searchAddress" placeholder="Current Location" name="searchAdd" required />
+                </div>
+                <div class="search-btn">
+                    <input type="image" src="front/images/search-img.png" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="Page_content_block" ng-controller="pageCtrl" ng-init="getDTrailerData()">
+    <div class="container">
+        <!-- <div class="row">
+            <h2>Select Trailer Type</h2>
+            <div class="col-lg-3 col-md-3 col-sm-3" ng-repeat="data in dTrailerdata">
+                <div class="Trailer-select-box">
+                    <div class="Trailer-check">
+                        <input type="radio" ng-model="$parent.modelType" name="type" ng-value="data" ng-click="getSizeData(data.id)" />
+                    </div>                    
+                    <img src="/admin/images/trailers/thumb/{{data.image}}" alt="Trailer" width="256" height="228" />
+                </div>
+                <div class="Trailer_text text-center">
+                        <h3>{{data.type_name}} Trailer </h3>
+                    </div>
+            </div>
+        </div> -->
+        <div class="row">
+            <h2 class="heading_center">Select Trailer Type</h2>
+            <div class="col-lg-3 col-sm-6 col-md-3" ng-repeat="data in dTrailerdata">
+                <div class="Trailer_Box1">
+                    <div class="Trailer_img1">
+                        <input type="radio" ng-model="$parent.modelType" name="type" ng-value="data" id="selredio{{data.id}}" ng-click="getSizeData(data.id,$index)" />
+                        <img src="/admin/images/trailers/thumb/{{data.image}}" alt="Trailer" width="256" ng-click="getSizeData(data.id,$index)" height="228" />
+                    </div>
+                    <div class="Trailer_text text-center">
+                        <h3>{{data.type_name}} </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="Trailer-size-block">
+                <h2 class="heading_center">Select Size</h2>
+                <section id="no-more-tables" class="noof_table">
+                    <table class="table-bordered table-striped table-condensed cf" style="width:100%;">
+                        <thead class="cf">
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-title="" ng-repeat="data in sizeOption | limitTo:5:1">
+                                    <div class="Trailer-size-box cur-box">
+                                        <label class="cur-box">
+                                            <div class="Trailer-size-checkbox">
+                                                <input ng-model="$parent.modelSize" ng-value="data" type="radio" id="sizeredio{{data.id}}" name="size" ng-click="calcularDailyRate($parent.modelType,$parent.modelSize,$parent.modelDuration)" />
+                                            </div>
+                                            <div class="Trailer-size-img">
+                                                <img src="front/images/check-mark.png" alt="select all" ng-if="data.label == 'All'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size1.png" alt="select all" ng-if="data.label == 'Small'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size2.png" alt="select all" ng-if="data.label == 'Medium'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size3.png" alt="select all" ng-if="data.label == 'Large'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size3.png" alt="select all" ng-if="data.label == 'Heavy'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/bike-img.png" alt="select all" ng-if="data.label == 'Bike'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/car-img.png" alt="select all" ng-if="data.label == 'Car'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size3.png" alt="select all" ng-if="data.label == 'Horse'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                                <img src="front/images/trailer-size3.png" alt="select all" ng-if="data.label == 'Plant'" ng-click="calcularDailyRate($parent.modelType,data,$parent.modelDuration)" />
+                                            </div>
+                                            <h4>{{data.label}}</h4>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+            <div class="Trailer-duration-block">
+                <h2>Duration</h2>
+                <div class="Trailer-time" ng-repeat="data in durationOption">
+                    <label>
+                        <input type="radio" ng-model="$parent.modelDuration" ng-value="data" ng-click="calcularDailyRate($parent.modelType,$parent.modelSize,$parent.modelDuration)" name="duration" /> &nbsp; {{data.name}}
+                    </label>
+                </div>
+            </div>
+            <div class="Trailer-Rate-Block">
+                <div class="Trailer-Rate-text">
+                    Your
+                    <br /> Daily Rate
+                </div>
+                <div class="Trailer-Rate-Price">
+                    ${{dailyRate}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
