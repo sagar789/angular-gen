@@ -26,7 +26,7 @@ exports.addCms = function(req, res) {
  *  @purpose  : This function used get all cmd data from DB
  */
 exports.loadCms = function(req, res) {
-    var query = 'SELECT id, title, status, class, created, @curRow := @curRow + 1 AS row_number from cms JOIN (SELECT @curRow := 0) r ORDER BY id DESC';
+    var query = 'SELECT id, title, status, modified, created, @curRow := @curRow + 1 AS row_number from cms JOIN (SELECT @curRow := 0) r ORDER BY id DESC';
     Connection.query(query, function(err, cms) {
         if (err) {
             res.status(500).json({ 'error': err });
