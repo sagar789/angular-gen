@@ -237,82 +237,52 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api_user/signup', function(req, res, next) {
-        var form = new formidable.IncomingForm();
-        form.parse(req);
-        var dataFields = {};
-        var imgName;
-        var filePath = '';
-        form.on('fileBegin', function(name, file) {
-            if (file.name.length > 0) {
-                var name = file.name.split('.');
-                imgName = name[0] + '_' + new Date().getTime() + '.' + name.pop();
-                file.path = req.app.locals.base_path + '/public/front/images/userpic/' + imgName;
-                filePath = file.path;
+        var dataFields = req.body;
+        Connection.query('SELECT * FROM users WHERE email="' + dataFields.email + '" OR mobile_one="' + dataFields.mobile_one + '"', function(err, user) {
+            if (req.session.flash) {
+                req.session.flash.error = [];
+            }
+            if (err) {
+                res.status(500).json({ status: 0, message: err });
+            }
+            // check to see if theres already a user with that email
+            if ((user.length > 0) && (user[0].email === dataFields.email)) {
+                res.status(500).json({ status: 0, error: { error_message: config.MESSAGES.EmailAlreadyExist } });
+            } else if ((user.length > 0) && (user[0].mobile_one === dataFields.mobile_one)) {
+                res.status(500).json({ status: 0, error: { error_message: config.MESSAGES.mobileExist } });
+            } else if ((user.length > 0) && (user[0].mobile_one === dataFields.mobile_one) && (user[0].otp_verified == 0)) {
+                res.status(500).json({ status: 0, error: { error_message: 'Your mobile number is not verified' } });
+            } else if ((user.length > 0) && (user[0].email === dataFields.email) && (user[0].mobile_one === dataFields.mobile_one)) {
+                res.status(500).json({ status: 0, error: { error_message: 'This email id and mobile number is already registered.' } });
+            } else {
+                console.log('11111111')
+                loadCodeForSignUp(dataFields, req, res)
             }
         });
+    });
 
-        form.on('field', function(field, value) {
-            dataFields[field] = value;
-        });
-        form.on('end', function() {
-            if (filePath.length > 0) {
-                im.crop({
-                    srcPath: filePath,
-                    dstPath: 'public/front/images/userpic/thumb/' + imgName,
-                    width: 204,
-                    height: 191,
-                    quality: 1,
-                });
-            }
-
-            Connection.query('SELECT * FROM users WHERE email="' + dataFields.email + '" OR mobile="' + dataFields.mobile + '"', function(err, user) {
-                if (req.session.flash) {
-                    req.session.flash.error = [];
-                }
-                if (err) {
-                    res.status(500).json({ status: 0, message: err });
-                }
-                // check to see if theres already a user with that email
-                if ((user.length > 0) && (user[0].email === dataFields.email)) {
-                    res.status(500).json({ status: 0, error: { error_message: config.MESSAGES.EmailAlreadyExist } });
-                } else if ((user.length > 0) && (user[0].mobile === dataFields.mobile)) {
-                    res.status(500).json({ status: 0, error: { error_message: config.MESSAGES.mobileExist } });
-                } else if ((user.length > 0) && (user[0].mobile === dataFields.mobile) && (user[0].otp_verified == 0)) {
-                    res.status(500).json({ status: 0, error: { error_message: 'Your mobile number is not verified' } });
-                } else if ((user.length > 0) && (user[0].email === dataFields.email) && (user[0].email_verified == 0)) {
-                    res.status(500).json({ status: 0, error: { error_message: 'Your email id is not verified' } });
-                } else if ((user.length > 0) && (user[0].email === dataFields.email) && (user[0].mobile === dataFields.mobile)) {
-                    res.status(500).json({ status: 0, error: { error_message: 'This email id and mobile numberis already registered.' } });
+    app.post('/api_user/login', function(req, res, next) {
+        var query = 'SELECT * from users where mobile_one= "' + req.body.mobile + '" and role=' + req.body.role;
+        Connection.query(query, function(err, user, fields) {
+            // if there are any errors, return the error before anything else
+            if (err) {
+                res.status(500).json({ status: 0, error: { error_message: "Database error" } });
+            } else if (!user[0]) {
+               res.status(500).json({ status: 0, error: { error_message: "Mobile number does not registered" } });
+            } else {
+                if (user[0].role == 1) {
+                    req.session.admin = user[0]
+                    Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                    delete req.session.admin.password;
+                    res.status(200).json({ status: 1, message: 'Admin login successfully', data: user[0] });
                 } else {
-                    var code = dataFields.promo_code;
-                    if (code && code.length > 0) {
-                        var query = 'SELECT usr.id AS promo_id, usr.promo_code FROM `users` AS usr WHERE usr.promo_code="' + code + '"';
-                        Connection.query(query, function(err, results) {
-                            if (err) {
-                                if (filePath.length > 0) {
-                                    var unlnkPathUser = req.app.locals.base_path + '/public/front/images/userpic/' + imgName;
-                                    var unlnkPathThumb = req.app.locals.base_path + '/public/front/images/userpic/thumb/' + imgName;
-                                    fs.unlink(unlnkPathUser, function(err) {});
-                                    fs.unlink(unlnkPathThumb, function(err) {});
-                                }
-                                res.status(500).json({ status: config.CODES.statusFail, error: { error_message: config.MESSAGES.DBErr } });
-                            } else if (results.length > 0) {
-                                loadCodeForSignUp(filePath, dataFields, results[0].promo_id, imgName, req, res)
-                            } else {
-                                if (filePath.length > 0) {
-                                    var unlnkPathUser = req.app.locals.base_path + '/public/front/images/userpic/' + imgName;
-                                    var unlnkPathThumb = req.app.locals.base_path + '/public/front/images/userpic/thumb/' + imgName;
-                                    fs.unlink(unlnkPathUser, function(err) {});
-                                    fs.unlink(unlnkPathThumb, function(err) {});
-                                }
-                                res.status(500).json({ status: 0, error: { error_message: 'Invalid promo code' } });
-                            }
-                        });
-                    } else {
-                        loadCodeForSignUp(filePath, dataFields, null, imgName, req, res)
-                    }
+                    req.session.user = user[0]
+                    Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                    delete req.session.user.password;
+                    res.status(200).json({ status: 1, message: 'User login successfully', data: user[0] });
                 }
-            });
+                // all is well, return successful user
+            }
         });
     });
 
@@ -347,84 +317,72 @@ module.exports = function(app, passport) {
         return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
     }
 
-    function loadCodeForSignUp(filePath, dataFields, promoId, imgName, req, res) {
+    function loadCodeForSignUp(dataFields, req, res) {
+
         var activationToken = randtoken.generate(32);
         var promoCode = randtoken.generate(6).toUpperCase();
         var otpStr = Math.floor(1000 + Math.random() * 9000);
-        if (filePath.length > 0) {
-            var imgUrl = config.fullhost + '/front/images/userpic/thumb/' + (imgName || null);
-        } else {
-            imgUrl = '';
-            imgName = '';
-        }
-        query = 'INSERT INTO users (email,mobile,first_name,last_name,password,activation_token,profile_pic,image_url,promo_code,otp,device_type,device_token,login_type) VALUES ("' +
-            dataFields.email + '"' + ',' + '"' +
-            dataFields.mobile + '"' + ',' + '"' +
-            dataFields.fname + '"' + ',' + '"' +
-            dataFields.lname + '"' + ',' + '"' +
-            createHash(dataFields.password) + '"' + ',' + '"' +
-            activationToken + '"' + ',' + '"' +
-            imgName + '"' + ',' + '"' +
-            imgUrl + '"' + ',' + '"' +
-            promoCode + '"' + ',' + '"' +
-            otpStr + '"' + ',' + '"' +
-            dataFields.device_type + '"' + ',' + '"' +
-            dataFields.device_token + '"' + ',' + '"' +
-            dataFields.login_type +
-            '")';
-        // return false;
+        dataFields.password = 123456;
+        console.log('22222222', dataFields)
+        data = {
+                email: dataFields.email,
+                mobile_one: dataFields.mobile_one,
+                mobile_two: dataFields.mobile_two,
+                first_name: dataFields.fname,
+                last_name: dataFields.lname,
+                password: createHash(dataFields.password),
+                activation_token: activationToken,
+                otp: otpStr
+            }
+            // query = 'INSERT INTO users SET ?', data;
+            // return false;
         async.parallel({
                 one: function(callback) {
-                    Connection.query(query, function(err, row, fields) {
+                    var querysql = Connection.query('INSERT INTO users SET ?', data, function(err, row, fields) {
                         if (err) {
                             callback('Database error');
                         } else {
                             console.log("row--------", row);
-                            var inserted = row.insertId;
-                            req.body.user_id = inserted;
-                            Connection.query("INSERT INTO accounts (user_id) VALUES ('" + inserted + "')", function(err, badge) {})
-                            Connection.query('INSERT INTO badge_counts(user_id) VALUES ("' + inserted + '")', function(err, badge) {})
-                            if (promoId) {
-                                Connection.query('INSERT INTO promotions(user_id, promo_user) VALUES ("' + inserted + '", "' + promoId + '")', function(err, promTn) {});
-                                Connection.query('INSERT INTO promotions(user_id) VALUES ("' + promoId + '")', function(err, promTn) {});
-                            }
                             callback(null, row);
                         }
                     });
+                    console.log('66666666', querysql.sql);
                 },
                 two: function(callback) {
-                    var baseUrl = req.protocol + '://' + config.fullhost;
-                    var activationLink = "";
-                    activationLink = baseUrl + "/verify?access_token=" + activationToken;
-                    var logo = baseUrl + '/front/images/logo.png';
-                    var homeLink = baseUrl;
-                    var privacyLink = baseUrl + '/privacy-policy';
-                    var TermsLink = baseUrl + '/terms-and-condition';
-                    var fbImg = baseUrl + '/front/images/square-facebook.png';
-                    var twImg = baseUrl + '/front/images/square-twitter.png';
-                    var to = [dataFields.email];
-                    var subject = 'Hire My Trailer - Verification Link';
-                    var fullName = dataFields.fname + ' ' + dataFields.lname;
-                    //var message = '<h1><tbody><tr><td><h1>HMT application - Verification Link</h1><hr /><p><big>Hello,</big></p><p><big> Please <a href="' + activationLink + '" title="click here">click here</a> on the link for verify your email id or copy and paste the url : <strong>' + activationLink + '</strong></big></p><h3><code>Thanks,<br />HMT application Team</code></h3></td></tr></tbody></table>';
-                    //var message = '<body style="background-color: #c6c6c6;width: 100%; margin:0;padding:0;-webkit-font-smoothing: antialiased;  "><table border="0" width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial, Helvetica, sans-serif"><tr><td height="30"></td></tr><tr><td width="100%" align="center" valign="top"><table width="700" border="0" cellpadding="0" cellspacing="0" align="center" class="container top-header-left" bgcolor="e5eaf7"><tr class="header-bg" bgcolor="178F45" style="float:left; width:100%;"><td><table border="0" width="680" align="center" cellpadding="0" cellspacing="0" class="container-middle" style="margin-left:15px;"><tr><td><table border="0" align="left" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="logo"> <tr><td height="15" colspan="3"></td></tr> <tr> <td colspan="3" align="center"> <a href="#" style="text-decoration:none"><img src="' + logo + '" alt=" " width="294" height="61" border="0"></a> </td> </tr> <tr><td height="15" colspan="3"></td> </tr></table></td> </tr> </table> </td></tr><tr><td style="    border-bottom: 1px solid #c6c6c6;    border-left: 1px solid #c6c6c6;    border-right: 1px solid #c6c6c6;"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="FFFFFF" style=""><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:25px; color:#777; padding:25px 25px 15px;">Dear ' + fullName + ',</td></tr><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">Thanks for signing up with Hire My Trailer! You must <a style="color:#179046;" href="' + activationLink + '">Click here</a> or follow this link to activate your account:</td></tr><tr> <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">' + activationLink + '</td>  </tr><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">Regards,<br>HMT Team </td></tr> </table></td></tr> </table> </td> </tr><tr><td height="30"></td> </tr> </table></body>';
-                    var message = '<body style="background-color: #ffffff;width: 100%; margin:0;padding:0;-webkit-font-smoothing: antialiased;  ">    <table border="0" width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial, Helvetica, sans-serif">        <tr>            <td height="50"></td>        </tr>        <tr bgcolor="#9f9fa3">            <td width="100%" align="center" valign="top" bgcolor="ffffff">                <table width="700" border="0" cellpadding="0" cellspacing="0" align="center" class="container top-header-left" bgcolor="e5eaf7">                    <tr class="header-bg" bgcolor="178F45" style="float:left; width:100%;">                        <td>                            <table border="0" width="680" align="center" cellpadding="0" cellspacing="0" class="container-middle" style="margin-left:15px;">                                <tr>                                    <td>                                        <table border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="logo">                                            <tr>                                                <td height="15" colspan="3"></td>                                            </tr>                                            <tr>                                                <td colspan="3" align="center">                                                    <a href="#" style="text-decoration:none"><img src="' + logo + '" alt=" " width="294" height="61" border="0"></a>                                                </td>                                            </tr>                                            <tr>                                                <td height="15" colspan="3"></td>                                            </tr>                                        </table>                                    </td>                                </tr>                            </table>                        </td>                    </tr>                    <tr>                        <td>                            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="FFFFFF" style="border: 2px solid #178F45;">                                <tr>                                    <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:25px; color:#178F45; padding:25px 25px 5px;">Dear ' + fullName + ',</td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#178F45; padding:0px 25px 25px;">Thank you for registering with HireMyTrailer.                                        <br/>Please follow this link inorder to validate your account.                                    </td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="padding:0px 25px 25px; text-align:center;"><a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#fff;background: #178F45;text-decoration: none;width: 250px;height: 50px;display: block;margin: auto;line-height: 47px;" href="' + activationLink + '">Validate you account here</a>                                    </td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="padding:0px 25px 25px; text-align:center;color:#178F45;">                                       <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + homeLink + '">Go to hiremytrailer.com.au</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + privacyLink + '">Privacy</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + TermsLink + '">Terms</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="http://www.facebook.com/hiremytrailer">Find us on Facebook</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="http://www.twitter.com/hiremytrailer">Find us on Twitter</a>                                    </td>                                </tr>                            </table>                        </td>                    </tr>                </table>            </td>        </tr>        <tr>            <td height="30"></td>        </tr>    </table></body>';
-                    mails.sendEmail(config.MAILSERVICE.USER, to, subject, message, function(response) {
-                        if (response.code == config.CODES.OK) {
-                            callback(null, response.data);
-                        } else if (response.code == config.CODES.Error) {
-                            callback('Verification email send error');
-                        }
-                    });
+                    // var baseUrl = req.protocol + '://' + config.fullhost;
+                    // var activationLink = "";
+                    // activationLink = baseUrl + "/verify?access_token=" + activationToken;
+                    // var logo = baseUrl + '/front/img/logo.png';
+                    // var homeLink = baseUrl;
+                    // var privacyLink = baseUrl + '/privacy-policy';
+                    // var TermsLink = baseUrl + '/terms-and-condition';
+                    // var fbImg = baseUrl + '/front/img/square-facebook.png';
+                    // var twImg = baseUrl + '/front/img/square-twitter.png';
+                    // var to = [dataFields.email];
+                    // var subject = 'Geniune Work - Verification Link';
+                    // var fullName = dataFields.fname + ' ' + dataFields.lname;
+                    // //var message = '<h1><tbody><tr><td><h1>HMT application - Verification Link</h1><hr /><p><big>Hello,</big></p><p><big> Please <a href="' + activationLink + '" title="click here">click here</a> on the link for verify your email id or copy and paste the url : <strong>' + activationLink + '</strong></big></p><h3><code>Thanks,<br />HMT application Team</code></h3></td></tr></tbody></table>';
+                    // //var message = '<body style="background-color: #c6c6c6;width: 100%; margin:0;padding:0;-webkit-font-smoothing: antialiased;  "><table border="0" width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial, Helvetica, sans-serif"><tr><td height="30"></td></tr><tr><td width="100%" align="center" valign="top"><table width="700" border="0" cellpadding="0" cellspacing="0" align="center" class="container top-header-left" bgcolor="e5eaf7"><tr class="header-bg" bgcolor="178F45" style="float:left; width:100%;"><td><table border="0" width="680" align="center" cellpadding="0" cellspacing="0" class="container-middle" style="margin-left:15px;"><tr><td><table border="0" align="left" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="logo"> <tr><td height="15" colspan="3"></td></tr> <tr> <td colspan="3" align="center"> <a href="#" style="text-decoration:none"><img src="' + logo + '" alt=" " width="294" height="61" border="0"></a> </td> </tr> <tr><td height="15" colspan="3"></td> </tr></table></td> </tr> </table> </td></tr><tr><td style="    border-bottom: 1px solid #c6c6c6;    border-left: 1px solid #c6c6c6;    border-right: 1px solid #c6c6c6;"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="FFFFFF" style=""><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:25px; color:#777; padding:25px 25px 15px;">Dear ' + fullName + ',</td></tr><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">Thanks for signing up with Hire My Trailer! You must <a style="color:#179046;" href="' + activationLink + '">Click here</a> or follow this link to activate your account:</td></tr><tr> <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">' + activationLink + '</td>  </tr><tr><td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#777; padding:0px 25px 25px;">Regards,<br>HMT Team </td></tr> </table></td></tr> </table> </td> </tr><tr><td height="30"></td> </tr> </table></body>';
+                    // var message = '<body style="background-color: #ffffff;width: 100%; margin:0;padding:0;-webkit-font-smoothing: antialiased;  ">    <table border="0" width="100%" cellpadding="0" cellspacing="0" style="font-family:Arial, Helvetica, sans-serif">        <tr>            <td height="50"></td>        </tr>        <tr bgcolor="#9f9fa3">            <td width="100%" align="center" valign="top" bgcolor="ffffff">                <table width="700" border="0" cellpadding="0" cellspacing="0" align="center" class="container top-header-left" bgcolor="e5eaf7">                    <tr class="header-bg" bgcolor="178F45" style="float:left; width:100%;">                        <td>                            <table border="0" width="680" align="center" cellpadding="0" cellspacing="0" class="container-middle" style="margin-left:15px;">                                <tr>                                    <td>                                        <table border="0" align="center" cellpadding="0" cellspacing="0" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" class="logo">                                            <tr>                                                <td height="15" colspan="3"></td>                                            </tr>                                            <tr>                                                <td colspan="3" align="center">                                                    <a href="#" style="text-decoration:none"><img src="' + logo + '" alt=" " width="294" height="61" border="0"></a>                                                </td>                                            </tr>                                            <tr>                                                <td height="15" colspan="3"></td>                                            </tr>                                        </table>                                    </td>                                </tr>                            </table>                        </td>                    </tr>                    <tr>                        <td>                            <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="FFFFFF" style="border: 2px solid #178F45;">                                <tr>                                    <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:25px; color:#178F45; padding:25px 25px 5px;">Dear ' + fullName + ',</td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#178F45; padding:0px 25px 25px;">Thank you for registering with HireMyTrailer.                                        <br/>Please follow this link inorder to validate your account.                                    </td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="padding:0px 25px 25px; text-align:center;"><a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#fff;background: #178F45;text-decoration: none;width: 250px;height: 50px;display: block;margin: auto;line-height: 47px;" href="' + activationLink + '">Validate you account here</a>                                    </td>                                </tr>                                <tr>                                    <td valign="top" height="20" style="padding:0px 25px 25px; text-align:center;color:#178F45;">                                       <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + homeLink + '">Go to hiremytrailer.com.au</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + privacyLink + '">Privacy</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="' + TermsLink + '">Terms</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="http://www.facebook.com/hiremytrailer">Find us on Facebook</a>|                                        <a style="font-family:Arial, Helvetica, sans-serif; font-size:18px;color:#178F45;text-decoration: none;padding: 0px 40px;line-height: 40px;" href="http://www.twitter.com/hiremytrailer">Find us on Twitter</a>                                    </td>                                </tr>                            </table>                        </td>                    </tr>                </table>            </td>        </tr>        <tr>            <td height="30"></td>        </tr>    </table></body>';
+                    // mails.sendEmail(config.MAILSERVICE.USER, to, subject, message, function(response) {
+                    //     if (response.code == config.CODES.OK) {
+                    //         callback(null, response.data);
+                    //     } else if (response.code == config.CODES.Error) {
+                    //         callback('Verification email send error');
+                    //     }
+                    // });
+                    callback(null, "done");
                 },
                 three: function(callback) {
-                    var otpMob = dataFields.mobile;
-                    mails.createVerificationMobile(otpMob, function(response) {
-                        if (response.code == config.CODES.OK) {
-                            callback(null, 'send otp');
-                        } else if (response.code == config.CODES.Error) {
-                            callback('OTP send error');
-                        }
-                    });
+                    var otpMob = dataFields.mobile_one;
+                    // mails.createVerificationMobile(otpMob, function(response) {
+                    //     if (response.code == config.CODES.OK) {
+                    //         callback(null, 'send otp');
+                    //     } else if (response.code == config.CODES.Error) {
+                    //         callback('OTP send error');
+                    //     }
+                    // });
+                    callback(null, 'send otp');
                 }
             },
             function(err, results) {

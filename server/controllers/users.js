@@ -241,7 +241,7 @@ exports.changePassword = function(req, res) {
  *  @purpose  : This function used for get all registerd user
  */
 exports.loadUsers = function(req, res) {
-    Connection.query('SELECT u.id,u.first_name AS fname,u.last_name AS lname,u.email,u.mobile,u.is_suspend,u.status,u.is_notification,u.is_dispute,u.created,u.balance,AVG(ur.rating) as rating, @curRow := @curRow + 1 AS row_number FROM `users` u LEFT JOIN user_ratings as ur ON u.id=ur.rater_id JOIN (SELECT @curRow := 0) r WHERE u.role=2 and u.is_deleted = 0 GROUP BY u.id ORDER BY `u`.`id` DESC', function(err, user) {
+    Connection.query('SELECT u.id,u.first_name AS fname,u.last_name AS lname,u.email,u.mobile_one,u.mobile_two,u.is_suspend,u.status,u.created, @curRow := @curRow + 1 AS row_number FROM `users` u JOIN (SELECT @curRow := 0) r WHERE u.role=2 and u.is_deleted = 0 GROUP BY u.id ORDER BY `u`.`id` DESC', function(err, user) {
         if (err) {
             res.status(500).json({ 'error': err });
         } else {
@@ -256,7 +256,8 @@ exports.loadUsers = function(req, res) {
  */
 exports.getUserDetail = function(req, res) {
     if (req.body.id) {
-        query = 'SELECT id,first_name AS fname,otp_verified AS is_mobile_verified,email_verified AS is_email_verified, address,suburb,state,postcode,licence_state,licence_number, is_dispute,is_login,last_name AS lname,image_url,mobile,is_notification, email,address,suburb,state,postcode,licence_state,licence_number,promo_code, is_suspend,status, balance, created FROM users where id="' + req.body.id + '"';
+        query = 'SELECT id,first_name AS fname,otp_verified AS is_mobile_verified,email_verified AS is_email_verified, address,state,postcode,last_name AS lname,profile_pic,mobile_one,mobile_two, email,is_suspend,status, created FROM users where id="' + req.body.id + '"';
+        console.log(query   )
         Connection.query(query, function(err, user) {
             if (err) {
                 res.status(500).json({ 'error': err });
