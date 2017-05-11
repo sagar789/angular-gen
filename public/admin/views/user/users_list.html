@@ -31,12 +31,9 @@
                     <th>Email</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Mobile</th>
-                    <th>Is Suspended</th>
+                    <th>Mobile 1</th>
+                    <th>Mobile 2</th>
                     <th>Status</th>
-                    <th>Notification Allow</th>
-                    <th>Dispute</th>
-                    <th>Rating</th>
                     <th>Created</th>
                     <th></th>
                 </tr>
@@ -47,22 +44,11 @@
                     <td>{{data.email}}</td>
                     <td>{{data.fname}}</td>
                     <td>{{data.lname}}</td>
-                    <td>{{data.mobile}}</td>
-                    <td>
-                        <button class="btn {{(data.is_suspend == 1)?'btn-danger':'btn-primary'}} btn-xs">{{(data.is_suspend == 1)?'Yes':'No'}}</button>
-                    </td>
+                    <td>{{data.mobile_one}}</td>
+                    <td>{{data.mobile_two}}</td>
                     <td>
                         <button class="btn {{(data.status == 1)?'btn-primary':'btn-danger'}} btn-xs">{{(data.status == 1)?'Active':'Inactive'}}</button>
-                    </td>
-                    <td>
-                        <button class="btn {{(data.is_notification == 1)?'btn-danger':'btn-primary'}} btn-xs">{{(data.is_notification == 0)?'Yes':'No'}}</button>
-                    </td>
-                    <td>
-                        <button class="btn {{(data.is_dispute == 1)?'btn-danger':'btn-primary'}} btn-xs">{{(data.is_dispute == 1)?'Yes':'No'}}</button>
-                    </td>
-                    <td>
-                        {{data.rating}}
-                    </td>
+                    </td>                   
                     <td>{{data.created | date:"MM/dd/yyyy 'at' h:mma"}}</td>
                     <td class="table-action">
                         <a ui-sref="viewUser({Id:data.id})" title="View Detail"><i class="fa fa-eye"></i></a>

@@ -76,6 +76,42 @@
         }
 
         /**
+         *@Function            : register()
+         *@Description         : This function used for check forgot password email and sent reset mail
+         *@unit test performed : check email validation and sent forgot password emailget
+         *@Result              : Done successfully and sent forgot password email
+         */
+        $scope.register = function() {
+            console.log('gchhkjhkjkj')
+            if ($scope.signinForm.$valid) {
+                console.log('121212121211212', $scope.regform);
+                // $rootScope.showLoading = true;
+                var obj = {};
+                obj.fname = $scope.regform.fname;
+                obj.lname = $scope.regform.lname;
+                obj.mobile_one = $scope.regform.mobile1;
+                obj.mobile_two = $scope.regform.mobile2;
+                obj.email = $scope.regform.email;
+                $http.post('/api_user/signup', obj).then(function(res) {
+                    if (res.data.status == 1) {
+                        $scope.signinForm = {};
+                       // $scope.signinForm.$setPristine();
+                       // $scope.signinForm.$setUntouched();
+                       // $rootScope.showLoading = false;
+                        Notify.showNotification(res.data.message);
+                    }
+                }, function(err) {
+                    console.log(err.data.error.error_message)
+                    $scope.signinForm = {};
+                   // $scope.signinForm.$setPristine();
+                   // $scope.signinForm.$setUntouched();
+                   // $rootScope.showLoading = false;
+                    Notify.showNotification(err.data.error.error_message, 'error-class');
+                });
+            }
+        }
+
+        /**
          *@Function            : userLogin()
          *@Description         : This function used for get login
          *@unit test performed : check form validation and get logged in user data in DB
@@ -83,11 +119,12 @@
          */
         $scope.userLogin = function() {
             if ($scope.signinForm.$valid) {
-                AuthService.login($scope.regform.email, $scope.regform.password, 2).then(function(res) {
-                    $('#myModal').modal('hide');
-                    $state.go('profile');
+                console.log('787878',$scope.reginform)
+                AuthService.login($scope.reginform.mobile, 2).then(function(res) {
+                    console.log(res)
                 }).catch(function(err) {
-                    Notify.showNotification(err.message, 'error-class')
+                    console.log(err)
+                    Notify.showNotification(err.error.error_message, 'error-class')
                 });
             }
         }

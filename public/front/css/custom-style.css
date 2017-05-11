@@ -1,0 +1,258 @@
+label.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+span.error {
+    color: #B94A48;
+    margin-bottom: 10px;
+}
+
+.error-class {
+    background-color: #f2dede !important;
+    border-color: #ebccd1 !important;
+    color: #a94442 !important;
+}
+
+.modal-body {
+    position: relative;
+    /* padding: 15px; */
+    margin: 12px 27px 10px 22px !important;
+    padding: 0px !important;
+}
+
+.Inputtype1 {
+    margin-bottom: 0px !important;
+}
+
+.seprecon {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.6) url(../images/loading_1.gif) center no-repeat;
+}
+
+input[disabled] {
+    color: #c6c6c6;
+}
+
+.not-fount-hight {
+    min-height: 350px;
+}
+
+.Pricing-map .iframe {
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    min-height: 610px;
+    position: relative;
+    z-index: 10;
+}
+
+.file-tag {
+    height: 60px;
+}
+
+.blnk-div {
+    height: 490px;
+    margin-top: 300px;
+}
+
+.Trailer_Box1 .Trailer_img1 {
+    width: 270px;
+    height: 265px;
+    text-align: center;
+    padding: 17px 0;
+    border: 1px solid #ccc;
+    margin-bottom: 29px;
+    cursor: pointer;
+}
+
+.Trailer_Box1 h3 {
+    text-align: center;
+}
+
+.notification {
+    float: left;
+    width: 100%;
+    margin: 20px 50px 0px;
+    border-bottom: 1px solid #E0E6EB;
+}
+
+.notification.ng-scope h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px;
+}
+
+.notification.ng-scope p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.panel-heading a:after {
+    content: '\f146';
+    position: absolute;
+    font-family: FontAwesome;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    transition: all 0.5s;
+    display: none;
+}
+
+.panel-heading.ques.active.panel-heading a:after {
+    display: block;
+}
+
+.progress-bar-success {
+    background-color: #1CAF9A;
+}
+
+.Progress_bar2 {
+    clear: both;
+    width: 80%;
+    margin: 15px 15px 20px;
+    text-align: left;
+    line-height: 0px;
+    color: #333;
+    font-size: 13px;
+}
+
+.faqlist {
+    margin-top: 100px;
+    font-size: 27px;
+}
+
+.cur-box {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.data-not-found {
+    margin-top: 200px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.raise-not-found {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 50px 3px 16px 0px;
+}
+
+.autocomplete {
+    width: 100%;
+    position: relative;
+}
+
+.autocomplete input {
+    font-size: 1.2em;
+    width: 100%;
+    padding: 0.4em;
+}
+
+.autocomplete ul {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    border-bottom: 1px solid #888;
+    z-index: 1;
+}
+
+.autocomplete li {
+    text-align: left;
+    list-style: none;
+    width: 100%;
+    padding: 0.4em;
+    background-color: #fff;
+}
+
+.autocomplete li.active {
+    width: 100%;
+    background-color: #4bf;
+}
+
+.form-control {
+    outline: 0;
+    border-color: #ECECEC;
+    border-style: solid;
+    border-width: 1px;
+    width: 95%;
+    background-color: #ffffff;
+    padding: 6px;
+    border-radius: 2px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.angucomplete-holder {
+    position: relative;
+}
+
+.angucomplete-dropdown {
+    border-color: #ececec;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 2px;
+    width: 510px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 9999;
+    position: absolute;
+    /*top: 32px;
+    left: 0px;
+    */
+    margin-top: -6px;
+    background-color: #ffffff;
+}
+
+.angucomplete-searching {
+    color: #acacac;
+    font-size: 14px;
+}
+
+.angucomplete-description {
+    font-size: 14px;
+}
+
+.angucomplete-row {
+    padding: 5px;
+    color: #000000;
+    margin-bottom: 4px;
+}
+
+.angucomplete-selected-row,
+.angucomplete-row:hover {
+    background-color: lightblue;
+    color: #ffffff;
+}
+
+.angucomplete-image-holder {
+    padding-top: 2px;
+    float: left;
+    height: 34px;
+    width: 34px;
+    margin-right: 10px;
+    margin-left: 5px;
+}
+
+.angucomplete-image {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+    border-color: #ececec;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.mobred {
+    color: red !important;
+}

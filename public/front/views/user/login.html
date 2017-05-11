@@ -1,0 +1,23 @@
+   <div class="login-page" ng-controller="userCtrl">
+        <h1>Log in and get to work</h1>
+        <div class="login-bg">
+            <form name="signinForm" data-ng-submit="userLogin()" novalidate>
+                <div class="text-field">
+                    <input type="number" placeholder="Mobile Number" name="mobile" data-ng-model="reginform.mobile" required>
+                    <label class="error" data-ng-show="(signinForm.$submitted || signinForm.mobile.$dirty) &amp;&amp; signinForm.mobile.$error.required">Please enter mobile number.</label>
+                </div>
+                <!-- <div class="text-field">
+                    <input type="password" placeholder="Password">
+                </div> -->
+                <input type="submit" value="Log in" class="fill-button">
+                <!-- <div class="clearfix">
+                    <div class="remember">
+                        <input type="checkbox"> <label>Remember Me</label>
+                    </div>
+                    <a href="#" class="forgot_password">Forgot Password</a>
+                </div> -->
+            </form>
+            <div class="an-account">Don't have an account? <a ui-sref="signup">Sign Up</a></div>
+
+        </div>
+    </div>

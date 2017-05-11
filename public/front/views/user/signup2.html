@@ -1,0 +1,62 @@
+<div ng-controller="pageCtrl" ng-init="loadPages(4)">
+    <div class="Page_content_block">
+        <div class="container">
+            <div class="row">
+                <form name="signinForm" data-ng-submit="userLogin()" novalidate>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel"><i class="fa-user fa"></i> &nbsp; User signin</h4>
+                        </div>
+                        <div class="modal-body">
+                            <label>Name</label>
+                            <input type="email" class="Inputtype1" placeholder="name" name="name" data-ng-model="regform.name" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.name.$dirty) && signinForm.name.$error.required">Please enter name.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>Address</label>
+                            <input type="email" class="Inputtype1" placeholder="address" name="address" data-ng-model="regform.address" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.address.$dirty) && signinForm.address.$error.required">Please enter address.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>DOB</label>
+                            <input type="email" class="Inputtype1" placeholder="address" name="address" data-ng-model="regform.address" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.address.$dirty) && signinForm.address.$error.required">Please enter address.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>Aaadhar no.</label>
+                            <input type="email" class="Inputtype1" placeholder="address" name="address" data-ng-model="regform.address" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.address.$dirty) && signinForm.address.$error.required">Please enter address.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>Email</label>
+                            <input type="email" class="Inputtype1" placeholder="Email" name="email" data-ng-model="regform.email" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.required">Please enter email.</label>
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.email.$dirty) && signinForm.email.$error.email">Please enter valid email.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>Password</label>
+                            <input type="password" class="Inputtype1" placeholder="Password" name="password" data-ng-model="regform.password" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.password.$dirty) && signinForm.password.$error.required">Please enter password.</label>
+                        </div>
+                        <div class="modal-body">
+                            <label>Password</label>
+                            <input type="password" class="Inputtype1" placeholder="Password" name="password" data-ng-model="regform.password" required />
+                            <label class="error" data-ng-show="(signinForm.$submitted || signinForm.password.$dirty) && signinForm.password.$error.required">Please enter confirm password.</label>
+                        </div>
+                        <div class="modal-footer">
+                            <p class="pull-left">
+                                <input type="checkbox" name="remember" data-ng-checked="true" /> Remember me.
+                                <br/><a data-ng-click="openForgotPass()" href="javascript:void(0);">Forgot password</a> </p>
+                            <button type="submit" class="btn Button1"><i class="fa-lock fa"></i> &nbsp; login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blnk-div text-center" ng-show="lengthPage">
+    <h1>{{lengthPage.length}}This Page is under constuction.</h1></div>

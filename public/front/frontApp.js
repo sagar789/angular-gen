@@ -27,7 +27,7 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
     $stateProvider.state('home', {
         url: '/',
         views: {
-            "middle": { templateUrl: 'front/views/main/main.html' },
+            "middle": { templateUrl: 'front/views/user/middle.html' },
             "header": { templateUrl: 'front/views/header/header.html' },
             "footer": { templateUrl: 'front/views/footer/footer.html' }
         },
@@ -45,8 +45,8 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$htt
                 }
             }
         }
-    }).state('register', {
-        url: '/register',
+    }).state('signup', {
+        url: '/signup',
         views: {
             "middle": { templateUrl: 'front/views/user/signup.html' },
             "header": { templateUrl: 'front/views/header/header.html' },

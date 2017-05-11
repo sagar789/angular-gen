@@ -10,7 +10,7 @@
                     <label class="col-sm-4 control-label">Image:</label>
                     <div class="col-sm-8">
                         <img class="propImg" src="/front/images/userpic/thumb/{{propEdImg}}" width="200" height="150" ng-if="(propEdImg.length > 0)">
-                        <img class="propImg" src="/front/images/no_image.png" width="200" height="150" ng-if="(propEdImg.length == 0)">
+                        <img class="propImg" src="/admin/images/no_image.png" width="200" height="150" ng-if="(propEdImg.length == 0)">
                     </div>
                 </div>
                 <div class="form-group">
@@ -20,9 +20,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Mobile:</label>
+                    <label class="col-sm-4 control-label">Mobile 1:</label>
                     <div class="col-sm-8">
-                        {{userData.mobile}}
+                        {{userData.mobile_one}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Mobile 2:</label>
+                    <div class="col-sm-8">
+                        {{userData.mobile_two}}
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,13 +55,13 @@
                         {{userData.address_line_2}}
                     </div>
                 </div> -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-sm-4 control-label">Suburb:</label>
                     <div class="col-sm-8">
                         {{userData.suburb}}
                     </div>
-                </div>
-                <div class="form-group">
+                </div> -->
+                <!-- <div class="form-group">
                     <label class="col-sm-4 control-label">Licence Number:</label>
                     <div class="col-sm-8">
                         {{userData.lnumber}}
@@ -72,14 +78,14 @@
                     <div class="col-sm-8">
                         {{userData.postcode}}
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="col-sm-4 control-label">State:</label>
                     <div class="col-sm-8">
                         {{userData.state}}
                     </div>
                 </div>
-                <div class="form-group">
+               <!--  <div class="form-group">
                     <label class="col-sm-4 control-label">Promo Code:</label>
                     <div class="col-sm-8">
                         {{userData.promo_code}}
@@ -90,14 +96,14 @@
                     <div class="col-sm-8">
                         {{userData.issuspend.name}}
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Status:</label>
                     <div class="col-sm-8">
                         {{userData.status.name}}
                     </div>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-sm-4 control-label">Notification Allow:</label>
                     <div class="col-sm-8">
                         {{userData.is_notification.name}}
@@ -108,7 +114,7 @@
                     <div class="col-sm-8">
                         {{userData.balance | currency}}
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Created:</label>
                     <div class="col-sm-8">
@@ -130,7 +136,7 @@
         <!-- panel-default -->
         </form>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h5 class="subtitle mb5">Invoice List As Renter</h5>
@@ -150,7 +156,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr ng-repeat="data in invoiceReList"> -->
+                            <tr ng-repeat="data in invoiceReList">
                             <tr dir-paginate="data in invoiceReList | filter:dataSearch | itemsPerPage: pageReSize" current-page="currentRePage" pagination-id="cust">
                                 <td>{{data.created | date : 'mediumDate'}}</td>
                                 <td>{{data.booking_id}}</td>
@@ -171,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <!-- table-responsive -->
+            
         </div>
     </div>
     <div class="col-md-6">
@@ -194,8 +200,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr ng-repeat="data in invoiceOwList"> -->
-                            <tr dir-paginate="data in invoiceOwList | filter:dataSearch | itemsPerPage: pageOwSize" current-page="currentOwPage" pagination-id="branch">
+                            <tr ng-repeat="data in invoiceOwList">                            <tr dir-paginate="data in invoiceOwList | filter:dataSearch | itemsPerPage: pageOwSize" current-page="currentOwPage" pagination-id="branch">
                                 <td>{{data.created | date : 'mediumDate'}}</td>
                                 <td>{{data.booking_id}}</td>
                                 <td>{{data.size}}, {{data.trailer_type}}</td>
@@ -215,8 +220,8 @@
                     </div>
                 </div>
             </div>
-            <!-- table-responsive -->
+            
         </div>
-    </div>
+    </div> -->
 </div>
 <!-- row -->

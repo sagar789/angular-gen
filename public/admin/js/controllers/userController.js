@@ -26,7 +26,7 @@
          */
         $scope.userLogin = function() {
             if ($scope.signinForm.$valid) {
-                AuthService.login($scope.regform.email, $scope.regform.password, 1).then(function(res) {
+                AuthService.adminlogin($scope.regform.email, $scope.regform.password, 1).then(function(res) {
                     Notify.showNotification('Welcome to Admin');
                     $state.go('dashboard');
                 }).catch(function(err) {
@@ -140,9 +140,9 @@
                 $rootScope.showLoading = false;
                 $scope.userData = res.data.data;
                 console.log($scope.userData);
-                $scope.userData.mobile = parseInt(res.data.data.mobile);
-                if (res.data.data.image_url) {
-                    $scope.propEdImg = res.data.data.image_url.split('/').pop();
+                $scope.userData.mobile_one = parseInt(res.data.data.mobile_one);
+                if (res.data.data.profile_pic) {
+                    $scope.propEdImg = res.data.data.profile_pic;
                 } else {
                     $scope.propEdImg = '';
                 }
@@ -152,41 +152,13 @@
                 } else {
                     $scope.userData.postcode = res.data.data.postcode;
                 }
-                if (res.data.data.licence_number == 0) {
-                    $scope.userData.lnumber = '';
-                } else {
-                    $scope.userData.lnumber = res.data.data.licence_number;
-                }
+                
                 angular.forEach($scope.statusOption, function(i, key) {
                     if (i.id === res.data.data.status) {
                         $scope.userData.status = $scope.statusOption[key];
                     }
-                });
-                angular.forEach($scope.notifOption, function(i, key) {
-                    if (i.id === res.data.data.is_notification) {
-                        $scope.userData.is_notification = $scope.notifOption[key];
-                    }
-                });
-                angular.forEach($scope.suspendedOption, function(i, key) {
-                    if (i.id === res.data.data.is_suspend) {
-                        $scope.userData.issuspend = $scope.suspendedOption[key];
-                    }
-                });
-                if ($scope.userData.balance !== 0) {
-                    $scope.userData.issuspend = $scope.suspendedOption[0];
-                }
-                angular.forEach($scope.disputeOption, function(i, key) {
-                    if (i.id === res.data.data.is_dispute) {
-                        $scope.userData.is_dispute = $scope.disputeOption[key];
-                    }
-                });
-                $scope.fileTypeError = false;
-                $http.post('/api/user/get_invoices_by_user', { user_id: $stateParams.Id, role: 1 }).then(function(res) {
-                    $scope.invoiceReList = res.data.data;
-                });
-                $http.post('/api/user/get_invoices_by_user', { user_id: $stateParams.Id, role: 2 }).then(function(res) {
-                    $scope.invoiceOwList = res.data.data;
-                });
+                });               
+                $scope.fileTypeError = false;                
             }, function(err) {
                 $rootScope.showLoading = false;
                 Notify.showNotification(err.data.error, 'error-class');
