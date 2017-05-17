@@ -15,7 +15,9 @@ var fs = require('fs');
 var async = require('async');
 var im = require('imagemagick');
 var Connection = require('../../config/database.js');
-
+var express = require('express');
+var app = express();
+var jwt = require('jsonwebtoken');
 // route middleware to make sure a user is logged in (shivansh)
 function isSuspendRequest(req, res, next) {
     if (req.body.user_id) {
@@ -33,10 +35,43 @@ function isSuspendRequest(req, res, next) {
 
 }
 
+
+
+var myLogger = function(req, res, next) {
+    // check header or url parameters or post parameters for token
+    var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+    // decode tokens
+    if (token) {
+
+        // verifies secret and checks exp
+        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+            if (err) {
+                return res.json({ success: false, message: 'Failed to authenticate token.' });
+            } else {
+                // if everything is good, save to request for use in other routes
+                req.decoded = decoded;
+                next();
+            }
+        });
+
+    } else {
+
+        // if there is no token
+        // return an error
+        return res.status(403).send({
+            success: false,
+            message: 'No token provided.'
+        });
+
+    }
+}
+
 module.exports = function(app) {
-    /**
-     * This API use for get all gallery image for CKEDITOR
-     */
+    app.use(myLogger)
+        /**
+         * This API use for get all gallery image for CKEDITOR
+         */
     app.get('/api/v1/ckeditor/gallery', function(req, res) {
         fs.readdir(req.app.locals.base_path + '/public/admin/ckeditor/images/', function(err, items) {
             //console.log(items)

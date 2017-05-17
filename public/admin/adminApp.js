@@ -10,6 +10,9 @@ myApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$sce
         $httpProvider.defaults.headers.get = {};
     }
 
+    $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
     // Answer edited to include suggestions from comments
     // because previous version of code introduced browser-related errors
 

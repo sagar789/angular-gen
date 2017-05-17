@@ -119,7 +119,10 @@
          *@Result              : Done successfully and get all list of registerd user
          */
         $scope.loadAllUsers = function() {
-            $http.get('/api/user/loadUsers').then(function(res) {
+            var config ={headers: {
+                'x-access-token': 'QWxhZGRpbjpvcGVuIHNlc2FtZQ=='
+            }}
+            $http.get('/api/user/loadUsers',config).then(function(res) {
                 $scope.userTitle = 'All User List';
                 $rootScope.showLoading = false;
                 $scope.userList = res.data.data;
