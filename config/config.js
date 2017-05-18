@@ -16,6 +16,7 @@ module.exports = {
     'SECUREDSIGNINGAPISECRETKEY': 'M4eritqzhIt7vT4/5LLCVHg/2MnIrPdrk3c5eDXndNP6/YPhT+nqMr4YzhbJdlQqURJAzXbuh5aUBsbx/vwjfw==',
     'SINCHAPIKEY': '4ebacec6-2866-45df-8dc2-304fed93d2f7',
     'SINCHSECRETKEY': 'gb8dRsrv9ESmumFs+mo/vA==',
+    'secret': 'ilovesmycodingforever',
     'CODES': {
         'OK': 200,
         'NoContent': 204,

@@ -15,9 +15,11 @@ var fs = require('fs');
 var async = require('async');
 var im = require('imagemagick');
 var Connection = require('../../config/database.js');
+var config = require('../../config/config.js');
 var express = require('express');
 var app = express();
-var jwt = require('jsonwebtoken');
+var jwt = require('jwt-simple');
+app.set('jwtTokenSecret', config.secret);
 // route middleware to make sure a user is logged in (shivansh)
 function isSuspendRequest(req, res, next) {
     if (req.body.user_id) {
@@ -39,21 +41,29 @@ function isSuspendRequest(req, res, next) {
 
 var myLogger = function(req, res, next) {
     // check header or url parameters or post parameters for token
+    console.log("apiii")
     var token = req.body.token || req.param('token') || req.headers['x-access-token'];
 
     // decode tokens
     if (token) {
 
         // verifies secret and checks exp
-        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-            if (err) {
+        try {
+            var decoded = jwt.decode(token, app.get('jwtTokenSecret'), false);
+            console.log("decoded", decoded)
+            if (decoded && (decoded.exp <= Date.now())) {
+                return res.json({ success: false, message: 'Access token has expired' });
+            } else if (decoded == null || decoded == '') {
                 return res.json({ success: false, message: 'Failed to authenticate token.' });
             } else {
-                // if everything is good, save to request for use in other routes
-                req.decoded = decoded;
                 next();
             }
-        });
+
+            // handle token here
+
+        } catch (err) {
+            return next();
+        }
 
     } else {
 

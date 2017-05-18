@@ -7,10 +7,13 @@ var async = require('async');
 var fs = require('fs');
 var im = require('imagemagick');
 var request = require('request');
+var express = require('express');
+var jwt = require('jwt-simple');
+var moment = require('moment');
 
 
 module.exports = function(app, passport) {
-
+    app.set('jwtTokenSecret', config.secret);
     app.post('/api_user/signin', passport.authenticate('local-login', {
         successRedirect: '/api_user/signinSuccess', // redirect to the secure profile section
         failureRedirect: '/api_user/signinFail', // redirect back to the signup page if there is an error
@@ -268,16 +271,22 @@ module.exports = function(app, passport) {
             if (err) {
                 res.status(500).json({ status: 0, error: { error_message: "Database error" } });
             } else if (!user[0]) {
-               res.status(500).json({ status: 0, error: { error_message: "Mobile number does not registered" } });
+                res.status(500).json({ status: 0, error: { error_message: "Mobile number does not registered" } });
             } else {
+                var expires = moment().add('days', 7).valueOf();
+                var token = jwt.encode({
+                    iss: user[0].id,
+                    exp: expires
+                }, app.get('jwtTokenSecret'));
+                user[0].server_token = token;
                 if (user[0].role == 1) {
-                    req.session.admin = user[0]
-                    Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                    req.session.admin = user[0];
+                    Connection.query('UPDATE users SET is_login= 0, server_token="' + token + '",  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
                     delete req.session.admin.password;
                     res.status(200).json({ status: 1, message: 'Admin login successfully', data: user[0] });
                 } else {
-                    req.session.user = user[0]
-                    Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                    req.session.user = user[0];
+                    Connection.query('UPDATE users SET is_login= 0, server_token="' + token + '", is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
                     delete req.session.user.password;
                     res.status(200).json({ status: 1, message: 'User login successfully', data: user[0] });
                 }

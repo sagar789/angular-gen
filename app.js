@@ -15,7 +15,7 @@ var connection = require('./config/database.js');
 app.locals.base_path = __dirname;
 connection.connect();
 
-require('./config/passport')(passport);
+require('./config/passport')(passport, app);
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'html'); // set up ejs for templating
 app.use(logger('dev'));
@@ -61,9 +61,11 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //     });
 // });
 // routes ======================================================================
-require('./server/routes/api.js')(app);
 require('./server/routes/api_user')(app, passport); // load our routes and pass in our app and fully configured passport
 require('./server/routes/routes')(app);
+require('./server/routes/api.js')(app);
+
+
 // launch ======================================================================
 app.listen(config.port)
 console.log("Initialize server --------------- >>>>>> http://localhost:" + config.port);

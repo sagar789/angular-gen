@@ -7,8 +7,11 @@ var nodemailer = require('nodemailer');
 var config = require('./config.js');
 var async = require('async');
 
+var jwt = require('jwt-simple');
+var moment = require('moment');
+
 // expose this function to our app using module.exports
-module.exports = function(passport) {
+module.exports = function(passport, app) {
 
     // =========================================================================
     // passport session setup ==================================================
@@ -169,20 +172,26 @@ module.exports = function(passport) {
                     return done(null, false, config.MESSAGES.loginAttempt);
                 } else if (!isValidPassword(user[0], req.body.password)) {
                     var islogin = (user[0].is_login + 1);
-                    console.log("islogin",islogin)
+                    console.log("islogin", islogin)
                     Connection.query('UPDATE users SET is_login= "' + islogin + '" WHERE id="' + user[0].id + '"', function(err, user) {})
                     return done(null, false, config.MESSAGES.checkPass);
                 } else if ((user.length > 0) && (user[0].email_verified == 0)) {
                     return done(null, false, config.MESSAGES.emailNotVerify);
                 } else {
+                    var expires = moment().add('days', 7).valueOf();
+                    var token = jwt.encode({
+                        iss: user[0].id,
+                        exp: expires
+                    }, app.get('jwtTokenSecret'));
+                    user[0].server_token = token;
                     if (user[0].role == 1) {
                         req.session.admin = user[0]
-                        Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                        Connection.query('UPDATE users SET is_login= 0, server_token="' + token + '", is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
                         delete req.session.admin.password;
                         return done(null, user[0]);
                     } else {
                         req.session.user = user[0]
-                        Connection.query('UPDATE users SET is_login= 0,  is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
+                        Connection.query('UPDATE users SET is_login= 0, server_token="' + token + '", is_suspend=0 WHERE id="' + user[0].id + '"', function(err, user) {})
                         delete req.session.user.password;
                         return done(null, user[0]);
                     }
